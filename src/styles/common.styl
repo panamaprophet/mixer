@@ -11,6 +11,7 @@ body
 body
 	font: normal 100% Helvetica, Arial, sans-serif
 	padding-top: 20px
+	background: #232323
 
 
 
@@ -106,3 +107,21 @@ body
 .input--radio
 	margin-top: 1px
 	vertical-align: top
+
+
+
+.credits
+	display: flex
+	justify-content: center
+	align-items: center
+	font-size: 0.8em
+	margin-top: 16px
+
+.credits__link
+	color: #fff
+
+	&:not(:last-child):after
+		content: '|'
+		opacity: 0.8
+		margin: 0 8px
+		display: inline-block

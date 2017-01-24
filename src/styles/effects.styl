@@ -1,0 +1,62 @@
+.effects
+	display: flex
+	justify-content: space-between
+	font-size: 0.8rem
+	flex-flow: column wrap
+
+.effect
+	margin: 8px auto 0
+
+	background: #c4cace url('i/metal-texture-small.jpg')
+	background-size: contain
+	box-shadow: 0 0 3px #000
+	border-radius: 4px
+	overflow: hidden
+
+	width: 100%
+
+.effect__title
+	font-weight: bold
+	margin-bottom: 16px
+	padding: 8px 16px
+	background: #1B5E20
+	color: rgba(255, 255, 255, 0.87)
+	border-radius: 4px 4px 0 0
+
+.effect:not(:first-child) .effect__title
+
+	background: #827717
+
+.effect__param
+	margin-bottom: 16px
+	padding: 0 16px
+
+.effect__param-title
+	display: inline-block
+	vertical-align: top
+	width: 70px
+	color: #555
+	text-shadow: 1px 1px 0 #eee
+	font-weight: bold
+
+.effect__param-value
+
+	display: inline-block
+	vertical-align: top
+
+	-webkit-appearance: none
+	appearance: none
+
+	background: #555
+	box-shadow: inset 0 0 10px #000
+
+	border: none
+	outline: none
+
+	width: calc(100% - 70px)
+
+.effect__param-placeholder
+	display: inline-block
+	width: calc(100% - 110px) /* 110 = 70 param title + 15 margin for each side */
+	vertical-align: top
+	margin: 3px 15px 0

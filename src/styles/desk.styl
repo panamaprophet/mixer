@@ -1,0 +1,103 @@
+.desk
+	width: 100%
+	height: 640px
+	margin: 0 auto
+	position: relative
+
+	user-select: none
+	font-size: 0.8em
+
+	border-radius: 4px
+
+	padding: 0
+	background: none
+	margin-right: 8px
+
+.desk__addons
+	border-radius: 4px
+	padding: 0
+	background: none
+	flex-shrink: 0
+
+.desk__faders
+	display: flex
+	flex-flow: row nowrap
+	width: 100%
+	height: 100%
+	box-shadow: 0 0 3px #000
+	border-radius: 4px
+	overflow: hidden
+
+
+
+.desk__controls
+	/*margin: 32px auto 16px*/
+	font-size: 0
+	padding: 16px
+
+	background: #c4cace url('i/metal-texture-small.jpg')
+	background-size: contain
+	box-shadow: 0 0 3px #000
+
+	border-radius: 4px 4px 0 0
+
+.desk__control
+
+	padding: 8px 16px
+	border: none
+	background: #fff
+	outline: none
+	margin-right: 1px
+	cursor: pointer
+
+	font-size: 0.8rem
+	font-weight: bold
+
+	text-transform: capitalize
+	text-shadow: 1px 0 0 #fff
+
+	transition: all 80ms ease-in-out
+	box-shadow: inset 0 0 0 1px rgba(0,0,0, 0.2),
+				inset 0 0 1px 2px rgba(255,255,255,0.9),
+				inset 0 -6px 5px rgba(0,0,0,0.1),
+				0 6px 7px rgba(0,0,0,0.3),
+				0 4px 1px rgba(0,0,0,0.5)
+
+	&:hover
+		box-shadow: inset 0 0 0 1px rgba(0,0,0, 0.2),
+					inset 0 0 1px 2px rgba(255,255,255,0.9),
+					inset 0 -10px 15px rgba(0,0,0,0.1),
+					0 6px 7px rgba(0,0,0,0.3),
+					0 4px 1px rgba(0,0,0,0.5)
+
+	&:active
+		transform: translateY(2px)
+		box-shadow: inset 0 0 0 1px rgba(0,0,0, 0.18),
+					inset 0 0 1px 2px rgba(255,255,255,0.5),
+					inset 0 -6px 5px rgba(0,0,0,0.1),
+					0 6px 7px rgba(0,0,0,0.3),
+					0 2px 1px rgba(0,0,0,0.5)
+
+.desk__control-meter
+
+	position: relative
+	margin-bottom: 8px
+	background: #555
+
+	&:after
+		box-shadow: inset 0 0 10px #000
+		content: ''
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		z-index: 12
+
+.desk__control-meter-value
+	position: relative
+	z-index: 10
+
+// .desk__control--play
+// .desk__control--pause
+// .desk__control--rewind

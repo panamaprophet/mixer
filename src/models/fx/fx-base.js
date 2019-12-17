@@ -1,14 +1,7 @@
 'use strict';
 
-
 import {last, head} from 'ramda';
-
-import {
-	setNodeParams,
-	connectNodes,
-	connectNodesSingle,
-	createGainNode,
-} from '/helpers/node';
+import {setNodeParams, connectNodes, connectNodesSingle, createGainNode} from '/helpers/node';
 
 
 class FX {

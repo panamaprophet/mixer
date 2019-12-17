@@ -1,13 +1,8 @@
-'use strict'
-
+'use strict';
 
 import FX from './fx-base'
-
 import {RESPONSE_URL} from './constants';
-
-import {
-	fetchAudioAsArrayBuffer,
-} from '/helpers/audio';
+import {fetchAudioAsArrayBuffer} from '/helpers/audio';
 
 
 export default class Reverb extends FX {

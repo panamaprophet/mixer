@@ -1,6 +1,5 @@
 'use strict';
 
-
 import {map} from 'ramda';
 
 

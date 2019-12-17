@@ -1,8 +1,6 @@
-'use strict'
+'use strict';
 
-
-import FX from './fx-base'
-
+import FX from './fx-base';
 
 export default class Distortion extends FX {
 	constructor(context, masterBus) {

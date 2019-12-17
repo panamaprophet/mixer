@@ -1,11 +1,8 @@
 'use strict';
 
-
 import {keys} from 'ramda';
 
-import {
-    isAudioParam,
-} from '/helpers/audio';
+import {isAudioParam} from '/helpers/audio';
 
 
 export const setNodeParams = (node, params) => keys(params).forEach(key => {

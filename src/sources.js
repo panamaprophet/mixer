@@ -1,4 +1,4 @@
-export default [
+export const tracks = [
 	{
 		title : 'Drums',
 		url : 'assets/audio/drums.mp3'
@@ -19,4 +19,4 @@ export default [
 		title : 'Vox',
 		url : 'assets/audio/vox.mp3'
 	}
-]
+];

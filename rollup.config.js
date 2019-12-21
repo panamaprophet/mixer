@@ -35,11 +35,10 @@ export default {
         }),
         alias({
             entries: [
-                { find: '/helpers', replacement: `${__dirname}/src/helpers` },
-                { find: '/models', replacement: `${__dirname}/src/models` }, 
-                { find: '/views', replacement: `${__dirname}/src/views` }, 
-                { find: '/components', replacement: `${__dirname}/src/components` },
-                { find: '/sources', replacement: `${__dirname}/src/sources` },
+                {
+                    find: /^\/(.+)/,
+                    replacement: `${__dirname}/src/$1`,
+                },
             ],
         }),
         serve('dist'),

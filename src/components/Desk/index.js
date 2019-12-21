@@ -1,59 +1,35 @@
 import React from 'react';
 
-import Delay from '/components/Effects/Delay';
-import Distortion from '/components/Effects/Distortion';
 import Meter from '/components/Meter';
-import Track from '/components/Track';
-
-import {
-	onTrackVolumeChange,
-	onReverbMixChange,
-	onDelayMixChange,
-	onDistortionMixChange,
-} from './actions';
 
 
 const Desk = ({
-	tracks,
-	fx: effects,
-	analyser,
-	onChange = () => {},
-}) => {
-	const {delay, distortion} = effects;
+    analyser,
 
-	return (
-		<div className="desk">
-			<div className="desk__faders">
-				{tracks && tracks.map(track => (
-					<Track
-						title={track.title}
+    play,
+    pause,
+    rewind,
 
-						toggleMute={() => track.toggleMute()}
-						toggleBypass={() => track.toggleFX()}
+    tracks,
+    effects,
+}) => (
+    <div className="desk">
+        <div className="desk__tracks">
+            {tracks}
+        </div>
 
-						onTrackVolumeChange={onTrackVolumeChange(track)}
-						onReverbMixChange={onReverbMixChange(track)}
-						onDelayMixChange={onDelayMixChange(track)}
-						onDistortionMixChange={onDistortionMixChange(track)}
-					/>
-				))}
-			</div>
+        <div className="desk__controls">
+            <Meter analyser={analyser} />
 
-			<div className="desk__controls">
-				<Meter analyser={analyser} />
+            <button className="desk__button" onClick={play}>Play</button>
+            <button className="desk__button" onClick={pause}>Pause</button>
+            <button className="desk__button" onClick={rewind}>Rewind</button>
+        </div>
 
-				<button className="desk__button" disabled>Play</button>
-				<button className="desk__button" disabled>Pause</button>
-				<button className="desk__button" disabled>Rewind</button>
-			</div>
-
-			<div className="desk__effects">
-				<Delay {...delay} onChange={onChange('delay')} />
-				<Distortion {...distortion} onChange={onChange('distortion')} />
-			</div>
-		</div>
-	);
-};
-
+        <div className="desk__effects">
+            {effects}
+        </div>
+    </div>
+);
 
 export default Desk;

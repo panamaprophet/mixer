@@ -1,11 +1,21 @@
 'use strict';
 
 import {fetchAudioAsArrayBuffer} from '/helpers/audio';
-import {connectNodes, createGainNode} from '/helpers/node';
+import {
+    connectNodes,
+    createGainNode,
+    getNodeParamNormalizedValue,
+    setNodeParamNormalizedValue,
+} from '/helpers/node';
+
+
+const generateIdByTitle = title => title.replace(/[^A-Za-z]+/gi, '').toLowerCase();
 
 
 class Track {
     constructor({url, title, context, masterBus}) {
+        this.id = generateIdByTitle(title);
+
         this.source = null;
         this.buffer = null;
 
@@ -30,14 +40,14 @@ class Track {
 
 
     get volume() {
-        return this.bus.gain.value;
+        return getNodeParamNormalizedValue(this.bus.gain);
     }
 
     set volume(value) {
         if (this.muted) {
             this.previousVolume = value;
         } else {
-            this.bus.gain.value = value;
+            setNodeParamNormalizedValue(this.bus.gain, value);
         }
     }
 
@@ -107,7 +117,7 @@ class Track {
     addFx(effects) {
         return effects.map(fx => {
             const {id, signalIn} = fx;
-            const bus = this.context.createGain();
+            const bus = createGainNode(this.context, 0);
 
             if (this.fx[id]) {
                 return false;
@@ -116,7 +126,7 @@ class Track {
             connectNodes(this.bus, bus);
             connectNodes(bus, signalIn);
 
-            bus.gain.value = 0;
+            this.fx[id] = bus;
 
             return bus;
         });

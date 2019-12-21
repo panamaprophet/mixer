@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+    <head>
 
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-		<title>Mixing Desk</title>
+        <title>Mixing Desk</title>
 
-		<style>
-			.fader {
-				width: 16px;
-				height: 100px;
+        <style>
+            .fader {
+                background: green;
+                position: relative;
+            }
 
-				background: green;
-				position: relative;
-			}
+            .fader-horizontal {
+                width: 100px;
+                height: 16px;
+                padding: 0 16px 0 8px;
+            }
 
-			.fader-thumb {
-				width: 16px;
-				height: 16px;
+            .fader-vertical {
+                width: 16px;
+                height: 100px;
+                padding: 16px 0 8px;
+            }
 
-				background: yellow;
-				position: absolute;
-			}
-		</style>
+            .fader-thumb {
+                width: 16px;
+                height: 16px;
 
-		<!-- <link rel="stylesheet" href="assets/build.css" /> -->
+                background: yellow;
+                position: absolute;
+            }
 
-	</head>
-	<body>
-		<div id="root"></div>
+            .track {
+                float: left;
+                padding: 4px;
+                margin: 4px;
+                background: lightblue;
+            }
+        </style>
 
-		<p class="credits">
-			<a class="credits__link" href="//canddy.ru">Home</a>
-			<a class="credits__link" href="//github.com/panamaprophet/mixer" target="_blank">Github</a>
-		</p>
+        <!-- <link rel="stylesheet" href="assets/build.css" /> -->
 
-		<script src="./bundle.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
 
-	</body>
+        <p class="credits">
+            <a class="credits__link" href="//canddy.ru">Home</a>
+            <a class="credits__link" href="//github.com/panamaprophet/mixer" target="_blank">Github</a>
+        </p>
+
+        <script src="./bundle.min.js"></script>
+
+    </body>
 </html>

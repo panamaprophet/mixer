@@ -5,65 +5,65 @@ import {setNodeParams, connectNodes, connectNodesSingle, createGainNode} from '/
 
 
 class FX {
-	constructor({id, context, masterBus}) {
-		this.id = id;
-		this.isLooped = false;
-		this.chain = [];
+    constructor({id, context, masterBus}) {
+        this.id = id;
+        this.isLooped = false;
+        this.chain = [];
 
-		this.signalIn = createGainNode(context);
-		this.signalOut = createGainNode(context);
+        this.signalIn = createGainNode(context);
+        this.signalOut = createGainNode(context);
 
-		connectNodes(this.signalOut, masterBus);
-	}
+        connectNodes(this.signalOut, masterBus);
+    }
 
-	get isChainEmpty() {
-		return this.chain.length === 0;
-	}
+    get isChainEmpty() {
+        return this.chain.length === 0;
+    }
 
-	get gain() {
-		return this.signalIn.gain.value;
-	}
+    get gain() {
+        return this.signalIn.gain.value;
+    }
 
-	set gain(value) {
-		this.signalIn.gain.value = value;
-	}
+    set gain(value) {
+        this.signalIn.gain.value = value;
+    }
 
-	addNode(node, parameters = {}) {
-		setNodeParams(node, parameters);
+    addNode(node, parameters = {}) {
+        setNodeParams(node, parameters);
 
-		this.isChainEmpty
-			? connectNodes(this.signalIn, node)
-			: connectNodesSingle(last(this.chain), node);
+        this.isChainEmpty
+            ? connectNodes(this.signalIn, node)
+            : connectNodesSingle(last(this.chain), node);
 
-		connectNodes(node, this.signalOut);
+        connectNodes(node, this.signalOut);
 
-		this.chain.push(node);
-	}
+        this.chain.push(node);
+    }
 
-	tweakNode(nodeIndex, parameter, value) {
-		const node = this.chain[nodeIndex];
+    tweakNode(nodeIndex, parameter, value) {
+        const node = this.chain[nodeIndex];
 
-		if (!node) {
-			return false;
-		}
+        if (!node) {
+            return false;
+        }
 
-		return setNodeParams(node, {
-			[parameter]: value,
-		});
-	}
+        return setNodeParams(node, {
+            [parameter]: value,
+        });
+    }
 
-	set loop(value) {
-		const lastNode = last(this.chain);
-		const firstNode = head(this.chain);
+    set loop(value) {
+        const lastNode = last(this.chain);
+        const firstNode = head(this.chain);
 
-		connectNodes(lastNode, firstNode);
+        connectNodes(lastNode, firstNode);
 
-		this.isLooped = value;
-	}
+        this.isLooped = value;
+    }
 
-	get loop() {
-		return this.isLooped;
-	}
+    get loop() {
+        return this.isLooped;
+    }
 }
 
 

@@ -3,28 +3,30 @@
 import React, {useReducer} from 'react';
 import {render} from 'react-dom';
 
-import Desk from '/components/Desk';
+import Desk from '/containers/Desk';
 import Context from '/containers/Context';
 
+import {initialState} from '/state';
 import {combinedReducer} from '/state/reducers';
-import createState from '/state/initialState';
-
-import Mixer from '/models/mixer';
-import {tracks} from '/sources';
 
 
-const mixdesk = new Mixer(tracks);
-const initialState = createState(mixdesk);
+const App = () => {
+    const [state, dispatch] = useReducer(combinedReducer, initialState);
 
-const App = () => (
-	const [state, dispatch] = useReducer(reducer, initialState);
+    const dispatchWithLog = args => {
+        console.log('[DISPATCH LOG]', args);
 
-	<Context.Provider value={dispatch}>
-		<Desk {...state} />
-	</Context.Provider>
-);
+        return dispatch(args);
+    }
+
+    return (
+        <Context.Provider value={dispatchWithLog}>
+            <Desk {...state} />
+        </Context.Provider>
+    );
+};
 
 render(
-	<App />,
-	document.getElementById('root')
+    <App />,
+    document.getElementById('root')
 );

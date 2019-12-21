@@ -11,16 +11,16 @@ const COLOR_RED = '#861615';
  * @returns {CanvasGradient}
  */
 export const createMeterGradient = (context, {
-	width,
-	height,
+    width,
+    height,
 }) => {
-	const gradient = context.createLinearGradient(0, 0, width, height);
+    const gradient = context.createLinearGradient(0, 0, width, height);
 
-	gradient.addColorStop(0.0, COLOR_GREEN);
-	gradient.addColorStop(0.8, COLOR_YELLOW);
-	gradient.addColorStop(0.9, COLOR_RED);
+    gradient.addColorStop(0.0, COLOR_GREEN);
+    gradient.addColorStop(0.8, COLOR_YELLOW);
+    gradient.addColorStop(0.9, COLOR_RED);
 
-	return gradient;
+    return gradient;
 }
 
 export const getAverage = converge(divide, [sum, length]);

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 
 import Desk from '/components/Desk';
-import Effect from '/components/Effect';
+import Effect from '/containers/Effect';
 import Context from '/containers/Context';
 import Track from '/containers/Track';
 

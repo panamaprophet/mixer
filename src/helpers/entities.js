@@ -34,7 +34,7 @@ const createDistortionEntity = ({id, filterType, frequency, strength}) => ({
         value: filterType,
     }, {
         name: 'Frequency',
-        id: 'distFrequency',
+        id: 'frequency',
         value: frequency,
     }, {
         name: 'Strength',
@@ -58,10 +58,6 @@ export const createTrackEntity = ({id, title, volume, muted, bypassFX, fx}) => (
     },
 });
 
-/**
- * 
- * @param {Effect} effect 
- */
 export const createEffectEntity = effect => {
     switch (effect.id) { //@TODO: switch to type
         case 'delay': 

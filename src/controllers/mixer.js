@@ -1,5 +1,6 @@
 'use strict'
 
+import {reduce} from 'ramda';
 
 import TrackController from './track'
 import FaderController from './fader'
@@ -8,54 +9,65 @@ import MixerTemplate from '../views/mixer'
 import Mixer from '../models/mixer'
 
 
+const COLOR_GREEN = '#05860f';
+const COLOR_YELLOW = '#f9ef5c';
+const COLOR_RED = '#861615';
+
+/**
+ * @param {AudioContext} context
+ * @param {Canvas} canvas
+ * @returns {CanvasGradient}
+ */
+const createMeterGradient = (context, {
+	width,
+	height
+}) => {
+	const gradient = context.createLinearGradient(0, 0, width, height);
+
+	gradient.addColorStop(0.0, COLOR_GREEN);
+	gradient.addColorStop(0.8, COLOR_YELLOW);
+	gradient.addColorStop(0.9, COLOR_RED);
+
+	return gradient;
+}
+
+/**
+ * @param {Number[]} items
+ * @returns {Number}
+ */
+const getAverage = items => reduce((acc, item) => acc += item, 0, items) / items.length;
+
+
+
 class MixerController {
 
-	constructor(sources, mountPoint){
-
-
+	constructor(sources, mountPoint) {
 		this.mixer = new Mixer(sources, this.enablePlayback.bind(this))
-
 		this.tracks = []
-
 		this.mountPoint = (typeof mountPoint === 'string') ? document.querySelector(mountPoint) : mountPoint
-
-		this.template = document.createElement('template')//document.querySelector(template || '#desk')
+		this.template = document.createElement('template') //document.querySelector(template || '#desk')
 		this.template.innerHTML = MixerTemplate
-
 		this._fillStyle = null
-
 
 		this.bootstrap()
 	}
 
-
-	get canvas(){
-
+	get canvas() {
 		return this.mountPoint.querySelector('[data-name="master-level"]')
 	}
 
-	get context(){
-
-		return this.canvas.getContext('2d')
+	get context() {
+		return this.canvas.getContext('2d');
 	}
 
-	get fillStyle(){
+	get fillStyle() {
+		this._fillStyle = this._fillStyle || createMeterGradient(this.context, this.canvas);
 
-		if (!this._fillStyle) {
-
-			this._fillStyle = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height)
-
-			this._fillStyle.addColorStop(0.0, '#05860f') // green
-			this._fillStyle.addColorStop(0.8, '#f9ef5c') // yellow
-			this._fillStyle.addColorStop(0.9, '#861615') // red
-		}
-
-		return this._fillStyle
+		return this._fillStyle;
 	}
 
 
-	bootstrap(){
-
+	bootstrap() {
 		let tracks = this.buildTracks()
 		let mixer = this.buildMixer()
 
@@ -72,16 +84,19 @@ class MixerController {
 		this.drawMeter()
 	}
 
-	buildTracks(){
+	buildTracks() {
 
 		let wrapper = document.createDocumentFragment()
 
-		this.tracks = this.mixer.tracks.map(track => new TrackController({ track: track, mountPoint: wrapper }))
+		this.tracks = this.mixer.tracks.map(track => new TrackController({
+			track: track,
+			mountPoint: wrapper
+		}))
 
 		return wrapper
 	}
 
-	buildMixer(){
+	buildMixer() {
 
 		let template = this.template
 
@@ -95,24 +110,21 @@ class MixerController {
 
 		let effects = element.querySelectorAll('[data-type="fader"]')
 
-		for (let i = 0; i < effects.length; i++){
+		for (let i = 0; i < effects.length; i++) {
 
 			let effect = effects[i]
 			let param = effect.getAttribute('data-param')
 			let paramChain = param.split('.')
 
 			let effectInput = new FaderController({
-
 				min: 0,
 				max: effect.getAttribute('data-max'),
-				step : effect.getAttribute('data-step'),
-				value : effect.getAttribute('data-value'),
+				step: effect.getAttribute('data-step'),
+				value: effect.getAttribute('data-value'),
+				onChange: (value) => {
+					let fx = this.mixer.fx.filter(fx => paramChain[0] === fx.id)[0]
 
-				onChange : (value) => {
-
-					let fx = this.mixer.fx.filter(fx => paramChain[0] === fx.ident)[0]
-
-					if (fx){
+					if (fx) {
 						fx[paramChain[1]] = value
 					}
 				}
@@ -123,52 +135,33 @@ class MixerController {
 		return element
 	}
 
-	drawMeter(){
+	drawMeter() {
+		let canvas = this.canvas
+		let context = this.context
+		let analyser = this.mixer.analyser
 
-	    let canvas = this.canvas
-	    let context = this.context
-	    let analyser = this.mixer.analyser
+		let array = new Uint8Array(analyser.frequencyBinCount)
 
-	    let array = new Uint8Array(analyser.frequencyBinCount)
+		analyser.getByteFrequencyData(array);
 
+		const average = getAverage(array);
 
-	    analyser.getByteFrequencyData(array)
-
-	    let average = this.getAverageVolume(array)
-
-	    // let average = array.reduce((sum, item) => sum += item) / array.length
-
-	    context.clearRect(0, 0, canvas.width, canvas.height)
-	    context.fillStyle = this.fillStyle
-	    context.fillRect(0, 0, (canvas.width / 100) * average, canvas.height)
+		context.clearRect(0, 0, canvas.width, canvas.height)
+		context.fillStyle = this.fillStyle;
+		context.fillRect(0, 0, (canvas.width / 100) * average, canvas.height);
 
 		requestAnimationFrame(this.drawMeter.bind(this));
 	}
 
-	getAverageVolume(array){
+	enablePlayback(tracks) {
+		const {mountPoint} = this;
+		const controls = mountPoint.querySelectorAll('.desk__control');
 
-		// return array.reduce((sum, item) => sum += item) / array.length
+		controls.forEach(control => {
+			control.removeAttribute('disabled');
+		});
 
-		var sum = 0
-
-		for (var i = 0; i < array.length; i++){ sum += array[i] }
-
-		return sum / array.length
-	}
-
-	enablePlayback(tracks){
-
-
-		console.log('tracks %o loaded. Enabling playback', tracks)
-
-
-		let controls = this.mountPoint.querySelectorAll('.desk__control')
-
-		for (let i = 0; i < controls.length; i++){
-
-			controls[i].removeAttribute('disabled')
-
-		}
+		console.log('tracks %o loaded. Interaction enabled', tracks);
 	}
 }
 

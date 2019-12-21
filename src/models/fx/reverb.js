@@ -3,34 +3,29 @@
 
 import FX from './fx-base'
 
+import {RESPONSE_URL} from './constants';
 
-class Reverb extends FX {
-
-	constructor(context, masterBus){
-
-		super(context, masterBus)
-
-
-		this.ident = 'reverb'
+import {
+	fetchAudioAsArrayBuffer,
+} from 'helpers/audio';
 
 
-		this.addNode(context.createConvolver())
+export default class Reverb extends FX {
+	constructor({context, masterBus}) {
+		super({
+			context,
+			masterBus,
+			id: 'reverb',
+		});
 
-		this.responseUrl = 'assets/audio/reverb-impulse-response.wav'
-
-		this.loadResponse()
+		this.addNode(context.createConvolver());
+		this.loadResponse(RESPONSE_URL);
 	}
 
-	loadResponse(){
+	async loadResponse(url) {
+		const arrayBuffer = await fetchAudioAsArrayBuffer(url);
+		const decodedData = await this.context.decodeAudioData(arrayBuffer);
 
-		let xhr = new XMLHttpRequest()
-
-		xhr.onload = () => { this.context.decodeAudioData(xhr.response, buffer => { this.tweakNode(0, 'buffer', buffer) }) }
-		xhr.open('GET', this.responseUrl, true)
-		xhr.responseType = 'arraybuffer'
-		xhr.send()
+		this.tweakNode(0, 'buffer', decodedData);
 	}
 }
-
-
-export default Reverb

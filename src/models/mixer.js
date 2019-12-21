@@ -1,63 +1,61 @@
 'use strict'
 
+import {map, keys} from 'ramda';
 
-import * as FX from './fx'
-import Track from './track'
+
+import Track from './track';
+
+import {
+	Delay,
+	Reverb,
+	Distortion,
+} as FX from './fx';
+
+import {
+	createContext,
+	createAnalyser,
+	createMasterBus,
+	createTrackFromSource,
+} from 'helpers/audio';
+
+import {
+	playAll,
+	pauseAll,
+	rewindAll,
+} from 'helpers/playback';
 
 
 class Mixer {
+	constructor(sources, onReady) {
+		this.context = createContext();
+		this.analyser = createAnalyser(this.context);
+		this.masterBus = createMasterBus(this.context, [this.analyser]);
 
-	constructor(sources, onReady){
+		this.fx = [
+			new Delay(this.context, this.masterBus),
+			new Reverb(this.context, this.masterBus),
+			new Distortion(this.context, this.masterBus),
+		];
 
-		this.context = new (window.AudioContext || window.webkitAudioContext)()
+		const trackPromises = map(createTrackFromSource(this.context, this.masterBus), sources);
 
-		this.analyser = this.context.createAnalyser()
-		this.analyser.fftSize = 2048
-
-		this.masterBus = this.context.createGain()
-		this.masterBus.connect(this.context.destination)
-		this.masterBus.connect(this.analyser)
-
-
-		this.fx = [ 'Distortion', 'Reverb', 'Delay' ].map(ClassName => new FX[ClassName](this.context, this.masterBus))
-
-
-		let promises = []
-
-		this.tracks = sources.map(source => {
-
-			let track = new Track(source.url, source.title, this.context, this.masterBus)
-
-			promises.push(track.loadingState)
-
-			this.fx.forEach(fx => { track.addFX(fx) })
-
-			return track
-		})
-
-		if (typeof onReady === 'function') {
-			Promise.all(promises).then(onReady)
-		}
+		Promise.all(trackPromises)
+			.then(map(track => track.addFx(this.fx)))
+			.then(map(onReady));
 	}
 
-	play(){
-
-		this.tracks.forEach(track => track.play())
+	play() {
+		return playAll(this.tracks);
 	}
 
-	pause(){
-
-		this.tracks.forEach(track => track.pause())
+	pause() {
+		return pauseAll(this.tracks);
 	}
 
-	rewind(){
-
-		this.tracks.forEach(track => {
-			track.stop()
-			track.play()
-		})
+	rewind() {
+		return rewindAll(this.tracks);
 	}
 }
 
 
-export default Mixer
+export default Mixer;

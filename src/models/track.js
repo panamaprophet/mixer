@@ -1,10 +1,17 @@
 'use strict'
 
 
+import {
+	fetchAudioAsArrayBuffer,
+} from 'helpers/audio';
+
+import {
+	connectNodes,
+} from 'helpers/node';
+
+
 class Track {
-
-	constructor(url, title, context, masterBus){
-
+	constructor(url, title, context, masterBus) {
 		this.source = null
 		this.buffer = null
 
@@ -30,60 +37,36 @@ class Track {
 	}
 
 
-	get volume(){
-
-		return this.bus.gain.value
+	get volume() {
+		return this.bus.gain.value;
 	}
 
-	set volume(value){
-
-		this.muted ? (this.previousVolume = value) : (this.bus.gain.value = value)
-	}
-
-
-	load(url){
-
-		return new Promise((resolve, reject) => {
-
-			let context = this.context
-			let xhr = new XMLHttpRequest()
-			let callback = this.onLoad.bind(this)
-
-			xhr.open('GET', url, true)
-			xhr.responseType = 'arraybuffer'
-
-			xhr.onload = () => {
-				context.decodeAudioData(xhr.response, (buffer) => {
-					callback(buffer)
-					resolve(this)
-				})
-			}
-
-			xhr.onabort = reject
-			xhr.onerror = reject
-
-			xhr.send()
-
-		})
-	}
-
-	onLoad(buffer){
-
-		this.buffer = buffer
-		this.ready = true
-
-		if (typeof this.onReady === 'function') {
-			this.onReady(this)
+	set volume(value) {
+		if (this.muted) {
+			this.previousVolume = value;
+		} else {
+			this.bus.gain.value = value;
 		}
+	}
 
-		console.log('Track "%s" is ready', this.title)
+	load(url) {
+		return fetchAudioAsArrayBuffer(url)
+			.then(audioBuffer => this.context.decodeAudioData(audioBuffer))
+			.then(decodedAudioData => {
+				this.buffer = decodedAudioData;
+				this.ready = true;
+
+				console.log('Track "%s" is ready', this.title);
+
+				return this;
+			})
+			.catch(error => console.log('Error', error));
 	}
 
 
-	play(){
-
+	play() {
 		if (this.playing) {
-			return false
+			return false;
 		}
 
 		this.source = this.context.createBufferSource()
@@ -96,17 +79,13 @@ class Track {
 		this.playing = true
 	}
 
-	pause(){
-
-		let elapsed = this.context.currentTime - this.startedAt
-
-        this.stop()
-
-        this.pausedAt = elapsed
+	pause() {
+		const elapsed = this.context.currentTime - this.startedAt;
+		this.stop();
+		this.pausedAt = elapsed;
 	}
 
-	stop(){
-
+	stop() {
 		if (this.source) {
 			this.source.disconnect()
 			this.source.stop(0)
@@ -118,55 +97,45 @@ class Track {
 		this.playing = false
 	}
 
-
-	mute(){
-
-		this.previousVolume = this.volume
-		this.volume = 0
-		this.muted = true
+	mute() {
+		this.previousVolume = this.volume;
+		this.volume = 0;
+		this.muted = true;
 	}
 
-	unmute(){
-
-		this.muted = false
-		this.volume = this.previousVolume
+	unmute() {
+		this.muted = false;
+		this.volume = this.previousVolume;
 	}
 
-	toggleMute(){
-
-		this.muted ? this.unmute() : this.mute()
+	toggleMute() {
+		this.muted ? this.unmute() : this.mute();
 	}
 
+	addFx(effects) {
+		return effects.map(fx => {
+			const {id, signalIn} = fx;
+			const bus = this.context.createGain();
 
-	addFX(fx, name){
+			if (this.fx[id]) {
+				return false;
+			}
 
-		let fxName = name || fx.ident
+			connectNodes(this.bus, bus);
+			connectNodes(bus, signalIn);
 
-		if (!this.fx[fxName]){
+			bus.gain.value = 0;
 
-			let bus = this.context.createGain()
-
-			this.bus.connect(bus)
-
-			bus.gain.value = 0
-			bus.connect(fx.signalIn)
-
-			this.fx[fxName] = bus
-
-			return bus
-		}
-
-		return false
+			return bus;
+		});
 	}
 
-	removeFX(){
-
-		this.fx[name].disconnect()
+	removeFx(id) {
+		this.fx[id].disconnect();
 	}
 
-	toggleFX(){
-
-		let fxNames = Object.keys(this.fx)
+	toggleFX() {
+		const fxNames = Object.keys(this.fx)
 
 		if (this.bypassFX) {
 

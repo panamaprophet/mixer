@@ -1,14 +1,11 @@
 'use strict'
 
-
 import FaderController from './fader'
-
 import TrackTemplate from '../views/track'
-
 
 class TrackController {
 
-	constructor(options){
+	constructor(options) {
 
 		this.track = options.track
 		this.mountPoint = options.mountPoint
@@ -20,7 +17,7 @@ class TrackController {
 		this.el = this.layout()
 	}
 
-	layout(){
+	layout() {
 
 		let track = this.track
 		let element = document.importNode(this.template.content, true)
@@ -45,18 +42,20 @@ class TrackController {
 		let fader = element.querySelector('[data-name="fader"]')
 
 		let faderView = new FaderController({
-			min : 0,
-			max : 1,
-			step : 0.05,
-			value : track.ready ? 1 : 0,
-			vertical : true,
-			onChange : function(value){ track.volume = value }
+			min: 0,
+			max: 1,
+			step: 0.05,
+			value: track.ready ? 1 : 0,
+			vertical: true,
+			onChange: function(value) {
+				track.volume = value
+			}
 		}, fader)
 
 
 		if (!track.ready) {
 
-			track.onReady = function(track){
+			track.onReady = function(track) {
 				faderView.animateTo(1)
 			}
 
@@ -66,7 +65,7 @@ class TrackController {
 
 		let faders = element.querySelectorAll('[data-type="fader"]')
 
-		for (let i = 0; i < faders.length; i++){
+		for (let i = 0; i < faders.length; i++) {
 
 			let fxIdent = faders[i].getAttribute('data-fx')
 
@@ -75,13 +74,15 @@ class TrackController {
 				max: 0.95,
 				value: 0,
 				step: 0.05,
-				onChange : function(value){ track.fx[fxIdent].gain.value = value }
+				onChange: function(value) {
+					track.fx[fxIdent].gain.value = value
+				}
 			}, faders[i])
 		}
 
 
 
-		if (this.mountPoint){
+		if (this.mountPoint) {
 			this.mountPoint.appendChild(element)
 		}
 

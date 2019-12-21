@@ -3,13 +3,13 @@
 
 class FaderController {
 
-	constructor(options, mountPoint){
+	constructor(options, mountPoint) {
 
 		this.min = options.min || 0
 		this.max = options.max || 0.95
 		this.step = options.step || 0.05
 		this.value = options.value || 0
-
+ 
 		this.isVertical = options.vertical || false
 
 		this.onChange = options.onChange || null
@@ -28,13 +28,13 @@ class FaderController {
 	}
 
 
-	get offset(){
+	get offset() {
 
 		return this.el.getBoundingClientRect()
 	}
 
 
-	onMouseDown(event){
+	onMouseDown(event) {
 
 		event.preventDefault()
 
@@ -44,7 +44,7 @@ class FaderController {
 		return false
 	}
 
-	onMouseMove(event){
+	onMouseMove(event) {
 
 		event.preventDefault()
 
@@ -52,7 +52,7 @@ class FaderController {
 		let offset = this.offset
 		let percentage = 0
 
-		if (this.isVertical){
+		if (this.isVertical) {
 
 			let y = event.touches ? event.touches[0].pageY : event.pageY
 
@@ -80,7 +80,7 @@ class FaderController {
 				x = rightBorder
 			}
 
-			if (x < offset.left){
+			if (x < offset.left) {
 				x = offset.left
 			}
 
@@ -101,14 +101,14 @@ class FaderController {
 		}
 	}
 
-	onMouseUp(){
+	onMouseUp() {
 
 		document.documentElement.removeEventListener('ontouchstart' in window ? 'touchmove' : 'mousemove', this.drag)
 		document.documentElement.removeEventListener('ontouchstart' in window ? 'touchend' : 'mouseup', this.dragEnd)
 	}
 
 
-	layout(){
+	layout() {
 
 		let element = document.createElement('div')
 		let elementTrigger = document.createElement('div')
@@ -141,7 +141,7 @@ class FaderController {
 		return element
 	}
 
-	mount(mountPoint){
+	mount(mountPoint) {
 
 		let mp = (typeof mountPoint === 'string') ? document.querySelector(mountPoint) : mountPoint
 
@@ -150,14 +150,16 @@ class FaderController {
 		}
 	}
 
-	animateTo(value){
+	animateTo(value) {
 
 		this.value = value
 
 
 		let trigger = this.el.querySelector('.fader__control-value')
 
-		trigger.addEventListener('transitionend', e => { trigger.classList.remove('fader__control-value--animated') })
+		trigger.addEventListener('transitionend', e => {
+			trigger.classList.remove('fader__control-value--animated')
+		})
 
 		trigger.classList.add('fader__control-value--animated')
 

@@ -1,91 +1,79 @@
-'use strict'
+'use strict';
+
+
+import {last, head, keys} from 'ramda';
+
+import {
+	setNodeParams,
+	connectNodes,
+	connectNodesSingle,
+	createGainNode,
+} from 'helpers/node';
+
+import {
+	isAudioParam,
+} from 'helpers/audio';
 
 
 class FX {
+	constructor({id, context, masterBus}) {
+		this.id = id;
+		this.isLooped = false;
+		this.chain = [];
 
-	constructor(context, masterBus){
+		this.signalIn = createGainNode(context);
+		this.signalOut = createGainNode(context);
 
-		this.context = context
-		this.looped = false
-		this.nodes = []
-
-
-		this.signalIn = context.createGain()
-		this.signalIn.gain.value = 1
-
-		this.signalOut = context.createGain()
-		this.signalOut.gain.value = 1
-
-
-		this.signalOut.connect(masterBus)
+		connectNodes(this.signalOut, masterBus);
 	}
 
-
-	get gain(){
-
-		return this.signalIn.gain.value
+	get isChainEmpty() {
+		return this.chain.length === 0;
 	}
 
-	set gain(value){
-
-		this.signalIn.gain.value = value
+	get gain() {
+		return this.signalIn.gain.value;
 	}
 
+	set gain(value) {
+		this.signalIn.gain.value = value;
+	}
 
-	addNode(node, parameters){
+	addNode(node, parameters = {}) {
+		setNodeParams(node, parameters);
 
+		this.isChainEmpty
+			? connectNodes(this.signalIn, node)
+			: connectNodesSingle(last(this.chain), node);
 
-		let lastNode = this.nodes[this.nodes.length - 1]
+		connectNodes(node, this.signalOut);
 
-		this.nodes.push(node)
+		this.chain.push(node);
+	}
 
+	tweakNode(nodeIndex, parameter, value) {
+		const node = this.chain[nodeIndex];
 
-		if (parameters){
-
-			let names = Object.keys(parameters)
-			let nodeIndex = this.nodes.length - 1
-
-			names.forEach(name => this.tweakNode(nodeIndex, name, parameters[name]))
+		if (!node) {
+			return false;
 		}
 
-
-		if (lastNode){
-
-			lastNode.disconnect()
-			lastNode.connect(node)
-
-		} else {
-
-			this.signalIn.connect(node)
-
-		}
-
-		node.connect(this.signalOut)
+		return setNodeParams(node, {
+			[parameter]: value,
+		});
 	}
 
-	tweakNode(nodeIndex, parameter, value){
+	set loop() {
+		const lastNode = last(this.chain);
+		const firstNode = head(this.chain);
 
+		connectNodes(lastNode, firstNode);
 
-		let node = this.nodes[nodeIndex]
-
-
-		if (node[parameter] instanceof AudioParam){
-
-			node[parameter].value = value
-
-		} else {
-
-			node[parameter] = value
-
-		}
+		this.isLooped = true;
 	}
 
-
-	loop(){
-
-		this.nodes[this.nodes.length - 1].connect(this.nodes[0])
-
-		this.looped = true
+	get loop() {
+		return this.isLooped;
 	}
 }
 

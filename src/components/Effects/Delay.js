@@ -4,7 +4,12 @@ import Fader from '/components/Fader';
 
 
 const Delay = ({
-	onChange = () => {},
+	time = 0,
+	feedback = 0,
+	frequency = 0,
+	onTimeChange = () => {},
+	onFeedbackChange = () => {},
+	onFrequencyChange = () => {},
 }) => {
 	return (
 		<div className="effect">
@@ -12,17 +17,17 @@ const Delay = ({
 
 			<div className="param">
 				<span className="param__title">Time:</span>
-				<Fader onChange={onChange('time')} />
+				<Fader onChange={onTimeChange} position={time} />
 			</div>
 
 			<div className="param">
 				<span className="param__title">Feedback:</span>
-				<Fader onChange={onChange('feedback')} />
+				<Fader onChange={onFeedbackChange} position={feedback} />
 			</div>
 
 			<div className="param">
 				<span className="param__title">Cutoff:</span>
-				<Fader onChange={onChange('frequency')} max="4000" step="10" />
+				<Fader onChange={onFrequencyChange} position={frequency} />
 			</div>
 		</div>
 	);

@@ -25,8 +25,6 @@ const Fader = ({
 
         document.documentElement.addEventListener('mousemove', onMove);
         document.documentElement.addEventListener('mouseup', onMoveEnd);
-
-        console.log('start');
     }
 
     const onMove = event => {
@@ -39,8 +37,6 @@ const Fader = ({
             ? getPointerVerticalPosition(getY(event), offset)
             : getPointerHorizontalPosition(getX(event), offset);
 
-        console.log('move');
-
         onChange(position);
     }
 
@@ -49,8 +45,6 @@ const Fader = ({
 
         document.documentElement.removeEventListener('mousemove', onMove);
         document.documentElement.removeEventListener('mouseup', onMoveEnd);
-
-        console.log('end');
     }
 
     const className = ['fader', isVertical ? 'fader-vertical' : 'fader-horizontal'].join(' ');

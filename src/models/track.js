@@ -1,15 +1,14 @@
 'use strict';
 
+import {generateIdByTitle} from '/helpers/entities';
 import {fetchAudioAsArrayBuffer} from '/helpers/audio';
+
 import {
     connectNodes,
     createGainNode,
     getNodeParamNormalizedValue,
     setNodeParamNormalizedValue,
 } from '/helpers/node';
-
-
-const generateIdByTitle = title => title.replace(/[^A-Za-z]+/gi, '').toLowerCase();
 
 
 class Track {
@@ -137,24 +136,14 @@ class Track {
     }
 
     toggleFX() {
-        const fxNames = Object.keys(this.fx)
+        return this.bypassFX
+            ? this.fx.map(fx => fx.gain.value = fx.previousVolume)
+            : this.fx.map(fx => {
+                fx.previousVolume = fx.gain.value;
+                fx.gain.value = 0;
+            });
 
-        if (this.bypassFX) {
-
-            fxNames.forEach(fxName => {
-                this.fx[fxName].gain.value = this.fx[fxName].previousVolume
-            })
-
-        } else {
-
-            fxNames.forEach(fxName => {
-                this.fx[fxName].previousVolume = this.fx[fxName].gain.value
-                this.fx[fxName].gain.value = 0
-            })
-
-        }
-
-        this.bypassFX = !this.bypassFX
+        this.bypassFX = !this.bypassFX;
     }
 }
 

@@ -4,37 +4,46 @@ import Fader from '/components/Fader';
 
 
 const Track = ({
+    id,
     title = 'Untitled',
     volume = 0,
+    isMuted,
+    isEffectsDisabled,
     send,
 
     onMute,
     onBypass,
     onVolumeChange,
-    onReverbMixChange,
-    onDelayMixChange,
-    onDistortionMixChange,
+    onSendLevelChange,
 }) => (
     <div className="track">
         <Fader onChange={onVolumeChange} position={volume} isVertical={true} />
 
         <div className="buttons">
-            <button className="track-button" onClick={onMute}>Mute</button>
-            <button className="track-button" onClick={onBypass}>Bypass FX</button>
+            <button
+                className={isMuted ? 'button-pressed' : ''}
+                onClick={() => onMute(id)}>
+                    Mute
+            </button>
+            <button 
+                className={isEffectsDisabled ? 'button-pressed' : ''}
+                onClick={() => onBypass(id)}>
+                    Bypass FX
+            </button>
         </div>
 
-        <div className="effects">
-            <div className="effect">
-                <span className="effect-title">Delay:</span>
-                <Fader onChange={onDelayMixChange} position={send.delay} />
+        <div className="sends">
+            <div className="send">
+                <span className="send-title">Delay:</span>
+                <Fader onChange={onSendLevelChange('delay')} position={send.delay} />
             </div>
-            <div className="effect">
-                <span className="effect-title">Revrb:</span>
-                <Fader onChange={onReverbMixChange} position={send.reverb} />
+            <div className="send">
+                <span className="send-title">Revrb:</span>
+                <Fader onChange={onSendLevelChange('reverb')} position={send.reverb} />
             </div>
-            <div className="effect">
-                <span className="effect-title">Distrt:</span>
-                <Fader onChange={onDistortionMixChange} position={send.distortion} />
+            <div className="send">
+                <span className="send-title">Distrt:</span>
+                <Fader onChange={onSendLevelChange('distortion')} position={send.distortion} />
             </div>
         </div>
 

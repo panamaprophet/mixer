@@ -1,15 +1,21 @@
 'use strict';
 
-import {map, chain} from 'ramda';
+import {map} from 'ramda';
 
-import Track from './track';
 import {Delay, Reverb, Distortion} from './fx';
-import {createContext, createAnalyser, createMasterBus, createTrackFromSource} from '/helpers/audio';
+import {
+    createContext,
+    createAnalyser,
+    createMasterBus,
+    createTrackFromSource,
+    isContextRunning,
+    resumeContext,
+} from '/helpers/audio';
 import {playAll, pauseAll, rewindAll} from '/helpers/playback';
 
 
 class Mixer {
-    constructor(sources, onReady = () => {}) {
+    constructor(sources = []) {
         this.context = createContext();
         this.analyser = createAnalyser(this.context);
         this.masterBus = createMasterBus(this.context, [this.analyser]);
@@ -26,7 +32,13 @@ class Mixer {
 
         this.tracks = tracks;
     }
-    play() {
+    async play() {
+        const {context} = this;
+
+        if (isContextRunning(context) === false) {
+            await resumeContext(context);
+        }
+
         return playAll(this.tracks);
     }
     pause() {
@@ -35,6 +47,7 @@ class Mixer {
     rewind() {
         return rewindAll(this.tracks);
     }
+
 }
 
 

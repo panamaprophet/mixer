@@ -6,12 +6,12 @@ import {render} from 'react-dom';
 import Desk from '/containers/Desk';
 import Context from '/containers/Context';
 
-import {initialState} from '/state';
-import {combinedReducer} from '/state/reducers';
+import {initialState} from '/store';
+import {reducer} from '/store/reducers';
 
 
 const App = () => {
-    const [state, dispatch] = useReducer(combinedReducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const dispatchWithLog = args => {
         console.log('[DISPATCH LOG]', args);

@@ -4,6 +4,10 @@ import {keys, curry} from 'ramda';
 
 import Track from '/models/track';
 
+import {
+    CONTEXT_STATE,
+} from '/constants';
+
 
 export const createContext = () => new window.AudioContext();
 
@@ -34,3 +38,11 @@ export const createTrackFromSource = curry((context, masterBus, {url, title}) =>
 export const isAudioParam = (node, parameter) => node[parameter] instanceof AudioParam;
 
 export const fetchAudioAsArrayBuffer = url => fetch(url).then(response => response.audioBuffer());
+
+export const isContextRunning = context => context.state === CONTEXT_STATE.RUNNING;
+
+/**
+ * @returns {Promise}
+ */
+export const resumeContext = context => context.resume();
+

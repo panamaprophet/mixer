@@ -1,33 +1,35 @@
 import React, {useContext} from 'react';
 
 import Desk from '/components/Desk';
+import Effect from '/components/Effect';
 import Context from '/containers/Context';
 import Track from '/containers/Track';
+
+import {
+    play,
+    pause,
+    rewind,
+} from './actions';
 
 const DeskContainer = ({
     tracks,
     effects,
-    controls,
+    playback,
 }) => {
     const dispatch = useContext(Context);
-    const {analyser} = controls;
-
-    const play = () => dispatch({type: 'CONTROLS_PLAY'});
-    const pause = () => dispatch({type: 'CONTROLS_PAUSE'});
-    const rewind = () => dispatch({type: 'CONTROLS_REWIND'});
 
     const Tracks = tracks.map(track => (<Track {...track} key={track.id} />));
-    const Effects = null;
+    const Effects = effects.map(effect => (<Effect {...effect} key={effect.id} />));
 
     return (
         <Desk 
-            onPlay={play}
-            onPause={pause}
-            onRewind={rewind}
+            onPlay={() => play(dispatch)}
+            onPause={() => pause(dispatch)}
+            onRewind={() => rewind(dispatch)}
 
             tracks={Tracks}
             effects={Effects}
-            analyser={analyser}
+            playback={playback}
         >
         </Desk>
     );

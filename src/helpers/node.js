@@ -8,11 +8,16 @@ import {isAudioParam} from '/helpers/audio';
 export const getNodeParamNormalizedValue = node => {
     const {value, maxValue, defaultValue} = node;
 
+    let resultValue = value;
+
+    // @TODO: fix it in normal way
     if (defaultValue === 1) {
-        return value / (1 / 100);
+        resultValue = value / (1 / 100);
+    } else {
+        resultValue = value / (maxValue / 100);
     }
 
-    return value / (maxValue / 100);
+    return Math.round(resultValue);
 }
 
 export const setNodeParamNormalizedValue = (node, value) => {
@@ -31,16 +36,11 @@ export const setNodeParamNormalizedValue = (node, value) => {
         return node;
     }
 
-    node.value = absoluteValue;
+    node.value = Math.round(absoluteValue);
 
     return node;
 }
 
-/**
- * @TODO: 
- * make function accepts value between 0 .. 100 and denormolize it by minValue/maxValue properties of node, use it in setters
- * make normalizer function to use in getters to get the value in percents
- */
 export const setNodeParams = (node, params) => keys(params).forEach(key => {
     if (isAudioParam(node, key)) {
         node[key].value = params[key];

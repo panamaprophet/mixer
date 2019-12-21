@@ -1,8 +1,8 @@
 'use strict';
 
-import {keys} from 'ramda';
+import {keys, curry} from 'ramda';
 
-import Track from 'models/track';
+import Track from '/models/track';
 
 
 export const createContext = () => new window.AudioContext();
@@ -24,12 +24,12 @@ export const createAnalyser = (context, parameters = {fftSize: 2048}) => {
     return analyser;
 };
 
-export const createTrackFromSource = (context, masterBus, {url, title}) => new Track({
+export const createTrackFromSource = curry((context, masterBus, {url, title}) => new Track({
     url,
     title,
     context,
     masterBus,
-});
+}));
 
 export const isAudioParam = (node, parameter) => node[parameter] instanceof AudioParam;
 

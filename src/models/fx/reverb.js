@@ -7,11 +7,11 @@ import {RESPONSE_URL} from './constants';
 
 import {
 	fetchAudioAsArrayBuffer,
-} from 'helpers/audio';
+} from '/helpers/audio';
 
 
 export default class Reverb extends FX {
-	constructor({context, masterBus}) {
+	constructor(context, masterBus) {
 		super({
 			context,
 			masterBus,
@@ -23,9 +23,14 @@ export default class Reverb extends FX {
 	}
 
 	async loadResponse(url) {
-		const arrayBuffer = await fetchAudioAsArrayBuffer(url);
-		const decodedData = await this.context.decodeAudioData(arrayBuffer);
+		const arrayBuffer = 
+			await fetchAudioAsArrayBuffer(url)
+				.catch(error => console.log('[ERROR LOADING RESPONSE]', error));
 
-		this.tweakNode(0, 'buffer', decodedData);
+		if (arrayBuffer) {
+			const decodedData = await this.context.decodeAudioData(arrayBuffer);
+
+			this.tweakNode(0, 'buffer', decodedData);
+		}
 	}
 }

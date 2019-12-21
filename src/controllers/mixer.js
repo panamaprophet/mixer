@@ -1,12 +1,14 @@
 'use strict'
 
-import {reduce} from 'ramda';
+import {
+	reduce
+} from 'ramda';
 
 import TrackController from './track'
 import FaderController from './fader'
 
-import MixerTemplate from '../views/mixer'
-import Mixer from '../models/mixer'
+import MixerTemplate from '/views/mixer'
+import Mixer from '/models/mixer'
 
 
 const COLOR_GREEN = '#05860f';
@@ -97,11 +99,8 @@ class MixerController {
 	}
 
 	buildMixer() {
-
 		let template = this.template
-
 		let element = document.importNode(template.content, true)
-
 
 		element.querySelector('[data-name="play"]').addEventListener('click', this.mixer.play.bind(this.mixer))
 		element.querySelector('[data-name="pause"]').addEventListener('click', this.mixer.pause.bind(this.mixer))
@@ -154,14 +153,11 @@ class MixerController {
 	}
 
 	enablePlayback(tracks) {
-		const {mountPoint} = this;
-		const controls = mountPoint.querySelectorAll('.desk__control');
+		const controls = this.mountPoint.querySelectorAll('.desk__control');
 
-		controls.forEach(control => {
-			control.removeAttribute('disabled');
-		});
+		controls.forEach(control => control.removeAttribute('disabled'));
 
-		console.log('tracks %o loaded. Interaction enabled', tracks);
+		console.log('Tracks %o loaded', tracks);
 	}
 }
 

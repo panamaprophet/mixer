@@ -1,6 +1,6 @@
 'use strict'
 
-import {map, keys} from 'ramda';
+import {map} from 'ramda';
 
 
 import Track from './track';
@@ -9,20 +9,20 @@ import {
 	Delay,
 	Reverb,
 	Distortion,
-} as FX from './fx';
+} from './fx';
 
 import {
 	createContext,
 	createAnalyser,
 	createMasterBus,
 	createTrackFromSource,
-} from 'helpers/audio';
+} from '/helpers/audio';
 
 import {
 	playAll,
 	pauseAll,
 	rewindAll,
-} from 'helpers/playback';
+} from '/helpers/playback';
 
 
 class Mixer {
@@ -30,6 +30,8 @@ class Mixer {
 		this.context = createContext();
 		this.analyser = createAnalyser(this.context);
 		this.masterBus = createMasterBus(this.context, [this.analyser]);
+		
+		this.tracks = [];
 
 		this.fx = [
 			new Delay(this.context, this.masterBus),
@@ -41,6 +43,7 @@ class Mixer {
 
 		Promise.all(trackPromises)
 			.then(map(track => track.addFx(this.fx)))
+			.then(map(track => this.tracks.push(track)))
 			.then(map(onReady));
 	}
 

@@ -22,7 +22,7 @@ export default class Delay extends FX {
 			frequency: 1120,
 		});
 
-		this.loop();
+		this.loop = true;
 	}
 
 	set time(value) {

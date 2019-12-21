@@ -1,18 +1,14 @@
 'use strict';
 
 
-import {last, head, keys} from 'ramda';
+import {last, head} from 'ramda';
 
 import {
 	setNodeParams,
 	connectNodes,
 	connectNodesSingle,
 	createGainNode,
-} from 'helpers/node';
-
-import {
-	isAudioParam,
-} from 'helpers/audio';
+} from '/helpers/node';
 
 
 class FX {
@@ -63,13 +59,13 @@ class FX {
 		});
 	}
 
-	set loop() {
+	set loop(value) {
 		const lastNode = last(this.chain);
 		const firstNode = head(this.chain);
 
 		connectNodes(lastNode, firstNode);
 
-		this.isLooped = true;
+		this.isLooped = value;
 	}
 
 	get loop() {

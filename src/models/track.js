@@ -3,15 +3,15 @@
 
 import {
 	fetchAudioAsArrayBuffer,
-} from 'helpers/audio';
+} from '/helpers/audio';
 
 import {
 	connectNodes,
-} from 'helpers/node';
+} from '/helpers/node';
 
 
 class Track {
-	constructor(url, title, context, masterBus) {
+	constructor({url, title, context, masterBus}) {
 		this.source = null
 		this.buffer = null
 
@@ -60,7 +60,7 @@ class Track {
 
 				return this;
 			})
-			.catch(error => console.log('Error', error));
+			.catch(error => console.log('[ERROR LOADING TRACK]', error));
 	}
 
 

@@ -1,22 +1,22 @@
 export default [
 	{
 		title : 'Drums',
-		url : 'assets/audio/tracks/drums.mp3'
+		url : 'assets/audio/drums.mp3'
 	},
 	{
 		title : 'Bass',
-		url : 'assets/audio/tracks/bass.mp3'
+		url : 'assets/audio/bass.mp3'
 	},
 	{
 		title : 'Keys',
-		url : 'assets/audio/tracks/keys.mp3'
+		url : 'assets/audio/keys.mp3'
 	},
 	{
 		title : 'Melodies',
-		url : 'assets/audio/tracks/melodies.mp3'
+		url : 'assets/audio/melodies.mp3'
 	},
 	{
 		title : 'Vox',
-		url : 'assets/audio/tracks/vox.mp3'
+		url : 'assets/audio/vox.mp3'
 	}
 ]

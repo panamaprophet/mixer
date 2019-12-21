@@ -5,7 +5,7 @@ import {keys} from 'ramda';
 
 import {
     isAudioParam,
-} from 'helpers/audio';
+} from '/helpers/audio';
 
 
 export const setNodeParams = (node, params) => keys(params).forEach(key => {

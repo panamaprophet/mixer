@@ -1,9 +1,10 @@
 'use strict';
 
 import FX from './fx-base'
-import {RESPONSE_URL} from './constants';
 import {fetchAudioAsArrayBuffer} from '/helpers/audio';
 
+
+const RESPONSE_URL = '/assets/audio/reverb-impulse-response.wav';
 
 export default class Reverb extends FX {
     constructor(context, masterBus) {
@@ -22,10 +23,12 @@ export default class Reverb extends FX {
             await fetchAudioAsArrayBuffer(url)
                 .catch(error => console.log('[ERROR LOADING RESPONSE]', error));
 
-        if (arrayBuffer) {
+        if (arrayBuffer.bufferLength > 0) {
             const decodedData = await this.context.decodeAudioData(arrayBuffer);
 
             this.tweakNode(0, 'buffer', decodedData);
+        } else {
+            console.log('[ERROR LOADING RESPONSE] arrayBuffer is empty');
         }
     }
 }

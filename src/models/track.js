@@ -10,6 +10,21 @@ import {
     setNodeParamNormalizedValue,
 } from '/helpers/node';
 
+/**
+ * @typedef {string} TrackId
+ */
+
+ /**
+  * @typedef {string} SendId
+  */
+
+/**
+ * @typedef {Object} Track
+ * @property {number} volume — value normalized between 0 .. 100
+ * @property {string} title
+ * @property {TrackId} id
+ */
+
 
 class Track {
     constructor({url, title, context, masterBus}) {

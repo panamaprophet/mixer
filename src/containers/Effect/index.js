@@ -4,8 +4,9 @@ import Effect from '/components/Effect';
 import Context from '/containers/Context';
 
 import {
-    onParamChange,
-} from './actions';
+    setSendParamValue,
+} from '/store/actions';
+
 
 const EffectContainer = props => {
     const dispatch = useContext(Context);
@@ -13,7 +14,7 @@ const EffectContainer = props => {
     return (
         <Effect 
             {...props} 
-            onParamChange={onParamChange(dispatch, props.id)} 
+            onParamChange={setSendParamValue(dispatch, props.id)} 
         />
     );
 };

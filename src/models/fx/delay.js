@@ -7,6 +7,10 @@ import {
 import FX from './fx-base';
 
 
+const DEFAULT_FEEDBACK = 0.8;
+const DEFAULT_TIME = 0.25;
+const DEFAULT_FREQUENCY = 1120;
+
 export default class Delay extends FX {
     constructor(context, masterBus) {
         super({
@@ -16,15 +20,15 @@ export default class Delay extends FX {
         });
 
         this.addNode(context.createDelay(), {
-            delayTime: 0.25,
+            delayTime: DEFAULT_TIME,
         });
 
         this.addNode(context.createGain(), {
-            gain: 0.8,
+            gain: DEFAULT_FEEDBACK,
         });
 
         this.addNode(context.createBiquadFilter(), {
-            frequency: 1120,
+            frequency: DEFAULT_FREQUENCY,
         });
 
         this.loop = true;

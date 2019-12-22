@@ -9,7 +9,8 @@ import {
     play,
     pause,
     rewind,
-} from './actions';
+} from '/store/actions';
+
 
 const DeskContainer = ({
     tracks,

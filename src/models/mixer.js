@@ -2,7 +2,9 @@
 
 import {map} from 'ramda';
 
-import {Delay, Reverb, Distortion} from './fx';
+import Delay from './fx/delay';
+import Reverb from './fx/reverb';
+import Distortion from './fx/distortion';
 import {
     createContext,
     createAnalyser,
@@ -11,7 +13,18 @@ import {
     isContextRunning,
     resumeContext,
 } from '/helpers/audio';
+import {setNodeParams,setNodeParamNormalizedValue} from '/helpers/node';
 import {playAll, pauseAll, rewindAll} from '/helpers/playback';
+
+
+/**
+ * @typedef {Object} Mixer
+ * @property {GainNode} masterBus
+ * @property {AudioContext} context
+ * @property {AnalyserNode} analyser
+ * @property {Track[]} tracks
+ * @property {Send[]} fx
+ */
 
 
 class Mixer {
@@ -32,6 +45,10 @@ class Mixer {
 
         this.tracks = tracks;
     }
+
+    /**
+     * @returns {Promise<Mixer>}
+     */
     async play() {
         const {context} = this;
 
@@ -39,15 +56,104 @@ class Mixer {
             await resumeContext(context);
         }
 
-        return playAll(this.tracks);
-    }
-    pause() {
-        return pauseAll(this.tracks);
-    }
-    rewind() {
-        return rewindAll(this.tracks);
+        playAll(this.tracks);
+
+        return this;
     }
 
+    /**
+     * @returns {Promise<Mixer>}
+     */
+    async pause() {
+        pauseAll(this.tracks);
+
+        return this;
+    }
+
+    /**
+     * @returns {Promise<Mixer>}
+     */
+    async rewind() {
+        rewindAll(this.tracks);
+
+        return this;
+    }
+
+    /**
+     * @param {TrackId} trackId 
+     * @param {number} volume
+     * @returns {Promise<Track[]>}
+     */
+    async setTrackVolume(trackId, volume) {
+        return this.tracks.map(track => {
+            if (track.id === trackId) {
+                track.volume = volume;
+            }
+
+            return track;
+        });
+    }
+
+    /**
+     * 
+     * @param {TrackId} trackId 
+     * @param {SendId} sendId 
+     * @param {number} level 
+     * @returns {Promise<Track[]>}
+     */
+    async setTrackSendLevel(trackId, sendId, level) {
+        return this.tracks.map(track => {
+            if (track.id === trackId) {
+                setNodeParamNormalizedValue(track.fx[sendId].gain, level);
+            }
+
+            return track;
+        });
+    }
+
+    /**
+     * @param {TrackId} trackId 
+     * @returns {Promise<Track[]>}
+     */
+    async toggleTrack(trackId) {
+        return this.tracks.map(track => {
+            if (track.id === trackId) {
+                track.toggleMute();
+            }
+
+            return track;
+        });
+    }
+
+    /**
+     * @param {TrackId} trackId 
+     * @returns {Promise<Track[]>}
+     */
+    async toggleTrackFx(trackId) {
+        return this.tracks.map(track => {
+            if (track.id === trackId) {
+                track.toggleFX();
+            }
+
+            return track;
+        });
+    }
+
+    /**
+     * 
+     * @param {SendId} sendId 
+     * @param {number|string} value 
+     * @retruns {Promise<Send[]>}
+     */
+    async setSendParamValue(sendId, parameterId, value) {
+        return this.fx.map(fx => {
+            if (fx.id === sendId) {
+                setNodeParams(fx, {[parameterId]: value});
+            }
+
+            return fx;
+        });
+    }
 }
 
 

@@ -4,20 +4,21 @@ import {
     getNodeParamNormalizedValue,
 } from '/helpers/node';
 
-import {
-    STRENGTH_MIN,
-    STRENGTH_MAX,
-} from './constants';
-
 import FX from './fx-base';
 
+
+const STRENGTH_MIN = 0;
+const STRENGTH_MAX = 1000;
+const DEFAULT_STRENGTH = 200;
+const DEFAULT_FILTER_FREQUENCY = 138;
+const DEFAULT_FILTER_TYPE = 'highpass';
+const DEFAULT_FILTER_Q = 1;
 
 const strengthToNode = value => ({
     maxValue: STRENGTH_MAX,
     minValue: STRENGTH_MIN,
     value,
 });
-
 
 export default class Distortion extends FX {
     constructor(context, masterBus) {
@@ -27,12 +28,12 @@ export default class Distortion extends FX {
             id: 'distortion',
         });
 
-        this._strength = 200;
+        this._strength = DEFAULT_STRENGTH;
 
         this.addNode(context.createBiquadFilter(), {
-            type: 'highpass',
-            frequency: 138,
-            Q: 1
+            type: DEFAULT_FILTER_TYPE,
+            frequency: DEFAULT_FILTER_FREQUENCY,
+            Q: DEFAULT_FILTER_Q,
         })
 
         this.addNode(context.createWaveShaper(), {

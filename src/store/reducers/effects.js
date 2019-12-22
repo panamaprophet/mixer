@@ -1,5 +1,4 @@
 
-// mixdesk.setSendParamValue(sendId, parameterId, value) => setNodeParam(mixdesk.fx[sendId], {[parameterId]: value})
 const setEffectParamValue = (effectId, parameterId, value, effects) => effects.map(effect => {
     if (effectId === effect.id) {
         return {

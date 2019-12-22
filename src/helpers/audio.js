@@ -37,7 +37,7 @@ export const createTrackFromSource = curry((context, masterBus, {url, title}) =>
 
 export const isAudioParam = (node, parameter) => node[parameter] instanceof AudioParam;
 
-export const fetchAudioAsArrayBuffer = url => fetch(url).then(response => response.audioBuffer());
+export const fetchAudioAsArrayBuffer = url => fetch(url).then(response => response.arrayBuffer());
 
 export const isContextRunning = context => context.state === CONTEXT_STATE.RUNNING;
 

@@ -17,12 +17,13 @@ export const getNodeParamNormalizedValue = node => {
         resultValue = value / (maxValue / 100);
     }
 
-    return Math.round(resultValue);
+    return resultValue;
 }
 
 export const setNodeParamNormalizedValue = (node, value) => {
-    const {maxValue, minValue} = node;
-    const absoluteValue = value * (maxValue / 100);
+    const {maxValue, minValue, defaultValue} = node;
+    const dividend = defaultValue === 1 ? 1 : maxValue;
+    const absoluteValue = value * (dividend / 100);
 
     if (absoluteValue < minValue) {
         node.value = minValue;
@@ -36,14 +37,15 @@ export const setNodeParamNormalizedValue = (node, value) => {
         return node;
     }
 
-    node.value = Math.round(absoluteValue);
+    node.value = absoluteValue;
 
     return node;
 }
 
 export const setNodeParams = (node, params) => keys(params).forEach(key => {
     if (isAudioParam(node, key)) {
-        node[key].value = params[key];
+        // node[key].value = params[key];
+        setNodeParamNormalizedValue(node[key], params[key]);
     } else {
         node[key] = params[key];
     }

@@ -4,11 +4,11 @@ import Track from '/components/Track';
 import Context from '/containers/Context'
 
 import {
-    setVolume,
-    setSendLevel,
-    toggleMute,
-    toggleFxBypass,
-} from './actions';
+    setTrackVolume,
+    setTrackSendLevel,
+    toggleTrack,
+    toggleTrackFx,
+} from '/store/actions';
 
 
 const TrackContainer = props => {
@@ -19,10 +19,10 @@ const TrackContainer = props => {
         <Track
             {...props}
 
-            onMute={toggleMute(dispatch)}
-            onBypass={toggleFxBypass(dispatch)}
-            onVolumeChange={setVolume(dispatch, trackId)}
-            onSendLevelChange={setSendLevel(dispatch, trackId)}
+            onMute={toggleTrack(dispatch)}
+            onBypass={toggleTrackFx(dispatch)}
+            onVolumeChange={setTrackVolume(dispatch, trackId)}
+            onSendLevelChange={setTrackSendLevel(dispatch, trackId)}
         />
     );
 }

@@ -1,4 +1,3 @@
-// mixdesk.setTrackVolume(trackId, volume) => mixdesk.tracks[index].volume = volume
 const setTrackVolume = (volume, trackId, tracks) => tracks.map(track => {
     if (track.id === trackId) {
         return {
@@ -10,7 +9,6 @@ const setTrackVolume = (volume, trackId, tracks) => tracks.map(track => {
     return track;
 });
 
-// mixdesk.setTrackSendLevel(trackId, sendId, level) => mixdesk.tracks[index].fx[sendId].gain.value = level
 const setTrackSendLevel = (level, sendId, trackId, tracks) => tracks.map(track => {
     if (track.id === trackId) {
         return {
@@ -25,7 +23,6 @@ const setTrackSendLevel = (level, sendId, trackId, tracks) => tracks.map(track =
     return track;
 });
 
-// mixdesk.toggleTrack(trackId) => mixdesk.tracks[index].toggleMute();
 const toggleTrackMute = (trackId, tracks) => tracks.map(track => {
     if (track.id === trackId) {
         return {
@@ -37,7 +34,6 @@ const toggleTrackMute = (trackId, tracks) => tracks.map(track => {
     return track;
 });
 
-// mixdesk.toggleTrackFx(trackId) => mixdesk.tracks[index].toggleFX();
 const toggleTrackFxBypass = (trackId, tracks) => tracks.map(track => {
     if (track.id === trackId) {
         return {
@@ -48,7 +44,6 @@ const toggleTrackFxBypass = (trackId, tracks) => tracks.map(track => {
 
     return track;
 });
-
 
 export const trackReducer = (tracks, {type, payload}) => {
     switch (type) {

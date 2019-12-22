@@ -3,19 +3,16 @@ import {
 } from '/constants';
 
 
-// mixdesk.play()
 const play = state => ({
 	...state,
 	status: PLAYBACK_STATUS.PLAYING
 });
 
-// mixdesk.pause()
 const pause = state => ({
 	...state,
 	status: PLAYBACK_STATUS.PAUSED,
 });
 
-// mixdesk.rewind()
 const rewind = state => ({
 	...state,
 	currentPosition: 0,

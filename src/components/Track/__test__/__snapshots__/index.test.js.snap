@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Track /> should renders without any errors 1`] = `
+<div
+  className="track"
+>
+  <Fader
+    isVertical={true}
+    onChange={[MockFunction]}
+    position={42}
+  />
+  <div
+    className="buttons"
+  >
+    <button
+      className="button"
+      onClick={[Function]}
+    >
+      Mute
+    </button>
+    <button
+      className="button"
+      onClick={[Function]}
+    >
+      Bypass FX
+    </button>
+  </div>
+  <div
+    className="sends"
+  >
+    <div
+      className="send"
+      key="delay"
+    >
+      <span
+        className="sendTitle"
+      >
+        delay
+      </span>
+      <Fader
+        position={0}
+      />
+    </div>
+    <div
+      className="send"
+      key="reverb"
+    >
+      <span
+        className="sendTitle"
+      >
+        reverb
+      </span>
+      <Fader
+        position={0}
+      />
+    </div>
+  </div>
+  <div
+    className="title"
+  >
+    Track
+  </div>
+</div>
+`;

@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import {keys} from 'ramda';
 
 import Fader from '/components/Fader';
 
@@ -10,14 +11,14 @@ const Track = ({
     id,
     title = 'Untitled',
     volume = 0,
-    isMuted,
-    isEffectsDisabled,
-    send,
+    isMuted = false,
+    isEffectsDisabled = false,
+    send = {},
 
-    onMute,
-    onBypass,
-    onVolumeChange,
-    onSendLevelChange,
+    onMute = () => {},
+    onBypass = () => {},
+    onVolumeChange = () => {},
+    onSendLevelChange = () => {},
 }) => (
     <div className={style.track}>
         <Fader onChange={onVolumeChange} position={volume} isVertical={true} />
@@ -36,18 +37,12 @@ const Track = ({
         </div>
 
         <div className={style.sends}>
-            <div className={style.send}>
-                <span className={style.sendTitle}>Delay:</span>
-                <Fader onChange={onSendLevelChange('delay')} position={send.delay} />
-            </div>
-            <div className={style.send}>
-                <span className={style.sendTitle}>Revrb:</span>
-                <Fader onChange={onSendLevelChange('reverb')} position={send.reverb} />
-            </div>
-            <div className={style.send}>
-                <span className={style.sendTitle}>Distrt:</span>
-                <Fader onChange={onSendLevelChange('distortion')} position={send.distortion} />
-            </div>
+            {send && keys(send).map(sendId => (
+                <div className={style.send} key={sendId}>
+                    <span className={style.sendTitle}>{sendId}</span>
+                    <Fader onChange={onSendLevelChange(sendId)} position={send[sendId]} />
+                </div>
+            ))}
         </div>
 
         <div className={style.title}>{title}</div>

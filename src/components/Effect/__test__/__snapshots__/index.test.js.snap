@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Effect /> should renders without any errors 1`] = `
+<div
+  className="effect"
+>
+  <div
+    className="title"
+  >
+    Effect
+  </div>
+  <div
+    className="parameterValue"
+    key="effect-parameter-1"
+  >
+    <EffectParameter
+      id="effect-parameter-1"
+      name="Effect Parameter 1"
+      onChange={[MockFunction]}
+      value={42}
+    />
+  </div>
+  <div
+    className="parameterValue"
+    key="effect-parameter-2"
+  >
+    <EffectParameter
+      id="effect-parameter-2"
+      name="Effect Parameter 2"
+      onChange={[MockFunction]}
+      value={71}
+    />
+  </div>
+</div>
+`;

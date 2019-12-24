@@ -5,9 +5,9 @@ import {
 } from '/constants';
 
 
-export const isPlaying = controls => controls.status === PLAYBACK_STATUS.PLAYING;
+export const isPlaying = playback => playback.status === PLAYBACK_STATUS.PLAYING;
 
-export const isPaused = controls => controls.status === PLAYBACK_STATUS.PAUSED && controls.currentPosition !== 0;
+export const isPaused = playback => playback.status === PLAYBACK_STATUS.PAUSED && playback.currentPosition !== 0;
 
 export const playAll = map(track => track.play());
 

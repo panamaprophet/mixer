@@ -13,19 +13,19 @@ import style from './style.css';
 
 
 const Desk = ({
-    playback,
+    playback = {},
 
-    onPlay,
-    onPause,
-    onRewind,
+    onPlay = () => {},
+    onPause = () => {},
+    onRewind = () => {},
 
-    tracks,
-    effects,
+    tracks = [],
+    effects = [],
 }) => {
     const btnClassNames = isButtonPressed => classnames(
         style.control,
         style.button,
-        isButtonPressed && style.buttonPressed,
+        isButtonPressed && style.isButtonPressed,
     );
 
     return (
@@ -36,7 +36,7 @@ const Desk = ({
 
             <div className={style.controlsContainer}>
                 <div className={style.controls}>
-                    <Meter analyser={playback.analyser} />
+                    {playback.analyser && <Meter analyser={playback.analyser} />}
 
                     <button className={btnClassNames(isPlaying(playback))} onClick={onPlay}>
                         <Icon type="play" />

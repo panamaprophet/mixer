@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Fader /> should renders without any errors 1`] = `
+<div
+  className="fader isHorisontal"
+>
+  <div
+    className="control"
+  >
+    <FaderThumb
+      events={
+        Object {
+          "onMouseDown": [Function],
+        }
+      }
+      isVertical={false}
+      position={0}
+    />
+  </div>
+</div>
+`;

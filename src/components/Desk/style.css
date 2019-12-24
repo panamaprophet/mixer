@@ -40,7 +40,7 @@
   border-radius: 4px 4px 0 0;
 }
 
-.control {
+.button {
   padding: 8px 16px;
   border: none;
   background: #fff;
@@ -55,11 +55,12 @@
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2), inset 0 0 1px 2px rgba(255,255,255,0.9), inset 0 -6px 5px rgba(0,0,0,0.1), 0 6px 7px rgba(0,0,0,0.3), 0 4px 1px rgba(0,0,0,0.5);
 }
 
-.control:hover {
+.button:hover {
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2), inset 0 0 1px 2px rgba(255,255,255,0.9), inset 0 -10px 15px rgba(0,0,0,0.1), 0 6px 7px rgba(0,0,0,0.3), 0 4px 1px rgba(0,0,0,0.5);
 }
 
-.control:active {
+.button:active,
+.isButtonPressed {
   transform: translateY(2px);
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18), inset 0 0 1px 2px rgba(255,255,255,0.5), inset 0 -6px 5px rgba(0,0,0,0.1), 0 6px 7px rgba(0,0,0,0.3), 0 2px 1px rgba(0,0,0,0.5);
 }

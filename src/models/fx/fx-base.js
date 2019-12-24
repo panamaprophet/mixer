@@ -10,6 +10,8 @@ class FX {
         this.isLooped = false;
         this.chain = [];
 
+        this.context = context;
+
         this.signalIn = createGainNode(context);
         this.signalOut = createGainNode(context);
 

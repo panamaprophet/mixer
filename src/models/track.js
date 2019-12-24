@@ -83,6 +83,8 @@ class Track {
                 this.state = TRACK_STATE.FAILED;
 
                 console.log('[ERROR LOADING TRACK]', error);
+
+                return this;
             });
     }
 

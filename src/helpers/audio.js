@@ -9,7 +9,7 @@ import {
 } from '/constants';
 
 
-export const createContext = () => new window.AudioContext();
+export const createContext = () => new (window.AudioContext || window.webkitAudioContext)();
 
 export const createMasterBus = (context, connections = []) => {
     const gain = context.createGain();

@@ -52,10 +52,7 @@
 }
 
 .sends {
-    display: flex;
-    justify-content: space-between;
     font-size: 0.8rem;
-    flex-flow: column wrap;
     margin-top: 10px;
 }
 

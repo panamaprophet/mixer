@@ -5,12 +5,13 @@ import serve from 'rollup-plugin-serve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import postcss from 'rollup-plugin-postcss';
+import {terser} from 'rollup-plugin-terser';
 
 import React from 'react';
 import ReactDom from 'react-dom';
 
 
-const ENVIRONMENT = 'development';
+const ENVIRONMENT = process.env.NODE_ENV || 'development';
 
 
 export default {
@@ -24,7 +25,8 @@ export default {
         resolve(),
         postcss({
             extract: true,
-            modules: true, 
+            modules: true,
+            minimize: true,
         }),
         commonjs({
             include: 'node_modules/**',
@@ -49,6 +51,7 @@ export default {
                 },
             ],
         }),
+        terser(),
         serve('dist'),
     ],
 }

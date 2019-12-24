@@ -2,6 +2,17 @@ import React from 'react';
 
 import Fader from '/components/Fader';
 
+import style from './style.css';
+
+
+const EffectParameter = ({id, name, value, onChange}) => (
+    <div className={style.parameter} key={id}>
+        <span className={style.parameterTitle}>{name}:</span>
+        <div className={style.parameterControl}>
+            <Fader onChange={onChange(id)} position={value} />
+        </div>
+    </div>
+);
 
 const Effect = ({
     name = 'Untitled',
@@ -9,13 +20,12 @@ const Effect = ({
     onParamChange = () => {},
 }) => {
     return (
-        <div className="effect">
-            <div className="title">{name}</div>
+        <div className={style.effect}>
+            <div className={style.title}>{name}</div>
 
             {parameters && parameters.map(parameter => (
-                <div className="param" key={parameter.id}>
-                    <span className="param__title">{parameter.name}:</span>
-                    <Fader onChange={onParamChange(parameter.id)} position={parameter.value} />
+                <div className={style.parameterValue} key={parameter.id}>
+                    <EffectParameter {...parameter} onChange={onParamChange} />
                 </div>
             ))}
         </div>

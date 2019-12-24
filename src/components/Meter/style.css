@@ -1,0 +1,19 @@
+.meter {
+    position: relative;
+    margin-bottom: 8px;
+    background: #555;
+}
+.meter:after {
+    box-shadow: inset 0 0 10px #000;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 12;
+}
+.meterValue {
+    position: relative;
+    z-index: 10;
+}

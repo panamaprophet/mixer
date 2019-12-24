@@ -152,10 +152,10 @@ class Track {
 
     toggleFX() {
         return this.bypassFX
-            ? this.fx.map(fx => fx.gain.value = fx.previousVolume)
-            : this.fx.map(fx => {
-                fx.previousVolume = fx.gain.value;
-                fx.gain.value = 0;
+            ? Object.keys(this.fx).map(fxId => this.fx[fxId].gain.value = fx.previousVolume)
+            : Object.keys(this.fx).map(fxId => {
+                this.fx[fxId].previousVolume = this.fx[fxId].gain.value;
+                this.fx[fxId].gain.value = 0;
             });
 
         this.bypassFX = !this.bypassFX;

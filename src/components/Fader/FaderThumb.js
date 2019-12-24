@@ -1,5 +1,7 @@
 import React from 'react';
 
+import style from './style.css';
+
 
 const FaderThumb = ({
     position = 0, 
@@ -8,14 +10,13 @@ const FaderThumb = ({
 }) => {
     const styleProperty = isVertical ? 'bottom' : 'left';
     const stylePropertyValue = position + '%';
-    const style = {
-        [styleProperty]: stylePropertyValue,
-    };
 
     return (
         <div
-            className="fader-thumb"
-            style={style}
+            className={style.thumb}
+            style={{
+                [styleProperty]: stylePropertyValue,
+            }}
             {...events}
         >
         </div>

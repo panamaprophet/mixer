@@ -2,6 +2,8 @@ import React, {useRef, useEffect} from 'react';
 
 import {getAverage, createMeterGradient} from './helpers';
 
+import style from './style.css';
+
 
 const Meter = ({
     analyser,
@@ -26,14 +28,16 @@ const Meter = ({
             context.clearRect(0, 0, width, height);
             context.fillStyle = createMeterGradient(context, {width, height});
             context.fillRect(0, 0, (width / 100) * average, height);
+
+            requestAnimationFrame(drawMeter);
         }
 
-        requestAnimationFrame(drawMeter);
+        drawMeter();
     }, []);
 
     return (
-        <div className="desk__control-meter">
-            <canvas className="desk__control-meter-value" width={width} height={height} ref={canvasRef}></canvas>
+        <div className={style.meter}>
+            <canvas className={style.meterValue} width={width} height={height} ref={canvasRef}></canvas>
         </div>
     );
 }

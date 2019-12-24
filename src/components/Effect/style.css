@@ -1,0 +1,60 @@
+.effect {
+  margin: 8px auto 0;
+  background: #c4cace; /* url("i/metal-texture-small.jpg"); */
+  background-size: contain;
+  box-shadow: 0 0 3px #000;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background: #1b5e20;
+  color: rgba(255,255,255,0.87);
+  border-radius: 4px 4px 0 0;
+}
+
+.effect:not(:first-child) .title {
+  background: #827717;
+}
+
+.parameter {
+    display: flex;
+    position: relative;
+    margin: 8px 8px 16px;
+}
+
+.parameterControl {
+    /* flex-grow: 1; */
+    width: 40%;
+}
+
+.parameterTitle {
+    display: inline-block;
+    width: 35%;
+    margin-right: 5%;
+    text-align: left;
+    color: #555;
+    text-shadow: 1px 1px 0 #eee;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/*
+.parameterValue {
+  display: inline-block;
+  vertical-align: top;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #555;
+  box-shadow: inset 0 0 10px #000;
+  border: none;
+  outline: none;
+  width: calc(100% - 70px);
+}
+*/

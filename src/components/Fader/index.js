@@ -2,6 +2,7 @@
 
 
 import React, {useRef} from 'react';
+import classnames from 'classnames';
 
 import FaderThumb from './FaderThumb';
 
@@ -11,6 +12,8 @@ import {
     getPointerVerticalPosition,
     getPointerHorizontalPosition,
 } from './helpers';
+
+import style from './style.css';
 
 
 const Fader = ({
@@ -47,11 +50,11 @@ const Fader = ({
         document.documentElement.removeEventListener('mouseup', onMoveEnd);
     }
 
-    const className = ['fader', isVertical ? 'fader-vertical' : 'fader-horizontal'].join(' ');
-
     return (
-        <div className={className} ref={containerRef}>
-            <FaderThumb position={position} events={{onMouseDown: onMoveStart}} isVertical={isVertical} />
+        <div className={classnames(style.fader, !isVertical && style.isHorisontal)} ref={containerRef}>
+            <div className={style.control}>
+                <FaderThumb position={position} events={{onMouseDown: onMoveStart}} isVertical={isVertical} />
+            </div>
         </div>
     );
 };

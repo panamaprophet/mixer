@@ -4,6 +4,7 @@ import alias from '@rollup/plugin-alias';
 import serve from 'rollup-plugin-serve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
+import postcss from 'rollup-plugin-postcss';
 
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -18,6 +19,10 @@ export default {
     },
     plugins: [
         resolve(),
+        postcss({
+            extract: true,
+            modules: true, 
+        }),
         commonjs({
             include: 'node_modules/**',
             namedExports: {

@@ -9,61 +9,36 @@
         <title>Mixing Desk</title>
 
         <style>
-            .fader {
-                background: green;
-                position: relative;
-            }
+          html,
+          body {
+              width: 100%;
+              height: 100%;
+              padding: 0;
+              margin: 0;
+          }
 
-            .fader-horizontal {
-                width: 100px;
-                height: 16px;
-                padding: 0 16px 0 8px;
-            }
+          body {
+              font: normal 100% Helvetica, Arial, sans-serif;
+          }
 
-            .fader-vertical {
-                width: 16px;
-                height: 100px;
-                padding: 16px 0 8px;
-            }
-
-            .fader-thumb {
-                width: 16px;
-                height: 16px;
-
-                background: yellow;
-                position: absolute;
-            }
-
-            .track,
-            .effect {
-                float: left;
-                padding: 4px;
-                margin: 4px;
-                background: lightblue;
-            }
-
-            .button-pressed {
-                box-shadow: 2px 2px 2px 2px #232323;
-            }
-
-            .desk__tracks,
-            .desk_effects {
-                overflow: hidden;
-            }
+          #root {
+              padding: 8px;
+              border-radius: 4px;
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: center;
+              align-items: flex-start;
+              max-width: 950px;
+              margin: 0 auto;
+              width: auto;
+              height: auto;
+          }
         </style>
 
-        <!-- <link rel="stylesheet" href="assets/build.css" /> -->
-
+        <link rel="stylesheet" href="./bundle.min.css" />
     </head>
     <body>
         <div id="root"></div>
-
-        <p class="credits">
-            <a class="credits__link" href="//canddy.ru">Home</a>
-            <a class="credits__link" href="//github.com/panamaprophet/mixer" target="_blank">Github</a>
-        </p>
-
         <script src="./bundle.min.js"></script>
-
     </body>
 </html>

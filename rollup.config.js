@@ -10,6 +10,9 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 
+const ENVIRONMENT = 'development';
+
+
 export default {
     input: './src/index.js',
     output: {
@@ -36,7 +39,7 @@ export default {
             presets: ['@babel/preset-react'],
         }),
         replace({
-            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
         }),
         alias({
             entries: [

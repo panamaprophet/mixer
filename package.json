@@ -4,7 +4,8 @@
   "description": "online dub mixing tool",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c"
   },
   "keywords": [],
   "author": "panamaprophet",
@@ -18,6 +19,7 @@
     "@rollup/plugin-node-resolve": "^6.0.0",
     "autoprefixer": "^6.7.0",
     "classnames": "^2.2.6",
+    "jest": "^24.9.0",
     "ramda": "^0.26.1",
     "rollup": "^1.27.13",
     "rollup-plugin-babel": "^4.3.3",

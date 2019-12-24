@@ -45,6 +45,17 @@ const toggleTrackFxBypass = (trackId, tracks) => tracks.map(track => {
     return track;
 });
 
+const setTrackReadyState = (state, trackId, tracks) => tracks.map(track => {
+    if (track.id === trackId) {
+        return {
+            ...track,
+            state,
+        };
+    }
+
+    return track;
+});
+
 export const trackReducer = (tracks, {type, payload}) => {
     switch (type) {
         case 'SET_TRACK_VOLUME':
@@ -69,6 +80,12 @@ export const trackReducer = (tracks, {type, payload}) => {
             return toggleTrackFxBypass(
                 payload.trackId,
                 tracks
+            );
+        case 'TRACK_SET_READY_STATE':
+            return setTrackReadyState(
+                payload.state,
+                payload.trackId,
+                tracks,
             );
         default:
             return tracks;

@@ -10,6 +10,10 @@ import {
     setNodeParamNormalizedValue,
 } from '/helpers/node';
 
+import {
+    TRACK_STATE,
+} from '/constants';
+
 /**
  * @typedef {string} TrackId
  */
@@ -41,8 +45,9 @@ class Track {
 
         this.muted = false;
         this.playing = false;
-        this.ready = false;
         this.bypassFX = false;
+
+        this.state = TRACK_STATE.NOT_SET;
 
         this.fx = {};
 
@@ -70,13 +75,15 @@ class Track {
             .then(audioBuffer => this.context.decodeAudioData(audioBuffer))
             .then(decodedAudioData => {
                 this.buffer = decodedAudioData;
-                this.ready = true;
-
-                console.log('Track "%s" is ready', this.title);
+                this.state = TRACK_STATE.READY;
 
                 return this;
             })
-            .catch(error => console.log('[ERROR LOADING TRACK]', error));
+            .catch(error => {
+                this.state = TRACK_STATE.FAILED;
+
+                console.log('[ERROR LOADING TRACK]', error);
+            });
     }
 
 

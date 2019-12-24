@@ -4,19 +4,19 @@ import {
 
 
 const play = state => ({
-	...state,
-	status: PLAYBACK_STATUS.PLAYING
+    ...state,
+    status: PLAYBACK_STATUS.PLAYING
 });
 
 const pause = state => ({
-	...state,
-	status: PLAYBACK_STATUS.PAUSED,
+    ...state,
+    status: PLAYBACK_STATUS.PAUSED,
 });
 
 const rewind = state => ({
-	...state,
-	currentPosition: 0,
-	status: PLAYBACK_STATUS.PLAYING,
+    ...state,
+    currentPosition: 0,
+    status: PLAYBACK_STATUS.PLAYING,
 })
 
 export const playbackReducer = (playback, action) => {

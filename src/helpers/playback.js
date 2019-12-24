@@ -1,7 +1,7 @@
 import {map} from 'ramda';
 
 import {
-	PLAYBACK_STATUS,
+    PLAYBACK_STATUS,
 } from '/constants';
 
 

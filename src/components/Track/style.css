@@ -64,12 +64,15 @@
 
 .sendTitle {
   display: inline-block;
-  width: 42px;
-  flex-shrink: 0;
+  width: 100%;
   text-align: left;
   color: #555;
   text-shadow: 1px 1px 0 #eee;
   font-weight: bold;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .title {

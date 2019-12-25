@@ -1,5 +1,5 @@
 # Mixer
 
-Mix desk application based on webaudio API
+[![Build Status](https://travis-ci.com/panamaprophet/mixer.svg?branch=master)](https://travis-ci.com/panamaprophet/mixer)
 
-You can check the fully working version [here](http://canddy.ru/work/mix).
+Mix desk application based on WebAudio API.

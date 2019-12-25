@@ -105,9 +105,11 @@ class Track {
     }
 
     pause() {
-        const elapsed = this.context.currentTime - this.startedAt;
-        this.stop();
-        this.pausedAt = elapsed;
+        if (this.playing) {
+            const elapsed = this.context.currentTime - this.startedAt;
+            this.stop();
+            this.pausedAt = elapsed;
+        }
     }
 
     stop() {

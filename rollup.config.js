@@ -3,7 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import alias from '@rollup/plugin-alias';
 import serve from 'rollup-plugin-serve';
 import commonjs from 'rollup-plugin-commonjs';
-import replace from 'rollup-plugin-replace';
+import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import {terser} from 'rollup-plugin-terser';
 

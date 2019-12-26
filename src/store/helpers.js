@@ -1,12 +1,20 @@
 import React, {useEffect} from 'react';
-import {map, curry} from 'ramda';
+import {map, curry, reject, not} from 'ramda';
 
 import {
     TRACK_STATE,
 } from '/constants';
 
+import {
+    createEffectEntity,
+    createPlaybackEntity,
+    createTrackEntity,
+} from '/helpers/entities';
+
 import {mixdesk} from './mixdesk';
 
+
+const compact = reject(item => not(Boolean(item)));
 
 const getLoadingState = track => track.loadingState;
 
@@ -48,3 +56,17 @@ export const getDispatchWithLog = curry((dispatch, args) => {
 
     return dispatch(args);
 });
+
+export const createState = mixdesk => {
+    const tracks = compact(mixdesk.tracks.map(createTrackEntity));
+    const effects = compact(mixdesk.fx.map(createEffectEntity));
+    const playback = createPlaybackEntity({
+        analyser: mixdesk.analyser,
+    });
+
+    return {
+        tracks,
+        effects,
+        playback,
+    };
+}

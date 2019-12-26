@@ -6,6 +6,8 @@
 
 .controlContainer {
     width: 40%;
+    flex-grow: 1;
+    margin-right: 16px;
 }
 
 .title {

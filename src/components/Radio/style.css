@@ -7,7 +7,12 @@
 .label {
     display: flex;
     margin-bottom: 8px;
-    align-items: center;
+	align-items: center;
+
+	color: #555;
+	font-weight: 700;
+    text-shadow: 1px 1px 0 #eee;
+    text-transform: capitalize;
 }
 
 .control {

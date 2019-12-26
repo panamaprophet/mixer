@@ -39,8 +39,8 @@
 }
 
 .isPressed {
-    text-decoration: line-through;
     color: #777;
+    transform: translateY(1px);
 }
 
 .mute,

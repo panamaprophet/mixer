@@ -24,9 +24,10 @@ export default class Reverb extends FX {
                 .catch(error => console.log('[ERROR LOADING RESPONSE]', error));
 
         if (arrayBuffer.bufferLength > 0) {
-            const decodedData = await this.context.decodeAudioData(arrayBuffer);
+            const decodedDataPromise = new Promise((resolve, reject) => 
+                this.context.decodeAudioData(arrayBuffer, resolve, reject));
 
-            this.tweakNode(0, 'buffer', decodedData);
+            this.tweakNode(0, 'buffer', await decodedDataPromise);
         } else {
             console.log('[ERROR LOADING RESPONSE] arrayBuffer is empty');
         }

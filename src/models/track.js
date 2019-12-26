@@ -72,7 +72,10 @@ class Track {
 
     load(url) {
         return fetchAudioAsArrayBuffer(url)
-            .then(audioBuffer => this.context.decodeAudioData(audioBuffer))
+            .then(audioBuffer => {
+                return new Promise((resolve, reject) => 
+                    this.context.decodeAudioData(audioBuffer, resolve, reject));
+            })
             .then(decodedAudioData => {
                 this.buffer = decodedAudioData;
                 this.state = TRACK_STATE.READY;

@@ -7,7 +7,7 @@ exports[`<Track /> should renders without any errors 1`] = `
   <Fader
     isVertical={true}
     onChange={[MockFunction]}
-    position={42}
+    value={42}
   />
   <div
     className="buttons"
@@ -38,7 +38,7 @@ exports[`<Track /> should renders without any errors 1`] = `
         delay
       </span>
       <Fader
-        position={0}
+        value={0}
       />
     </div>
     <div
@@ -51,7 +51,7 @@ exports[`<Track /> should renders without any errors 1`] = `
         reverb
       </span>
       <Fader
-        position={0}
+        value={0}
       />
     </div>
   </div>

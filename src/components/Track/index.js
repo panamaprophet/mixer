@@ -21,7 +21,7 @@ const Track = ({
     onSendLevelChange = () => {},
 }) => (
     <div className={style.track}>
-        <Fader onChange={onVolumeChange} position={volume} isVertical={true} />
+        <Fader onChange={onVolumeChange} value={volume} isVertical={true} />
 
         <div className="buttons">
             <button
@@ -40,7 +40,7 @@ const Track = ({
             {send && keys(send).map(sendId => (
                 <div className={style.send} key={sendId}>
                     <span className={style.sendTitle}>{sendId}</span>
-                    <Fader onChange={onSendLevelChange(sendId)} position={send[sendId]} />
+                    <Fader onChange={onSendLevelChange(sendId)} value={send[sendId]} />
                 </div>
             ))}
         </div>

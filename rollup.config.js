@@ -51,7 +51,7 @@ export default {
                 },
             ],
         }),
-        (ENVIRONMENT === 'production') && terser(),
+        terser(),
         serve('dist'),
     ],
 }

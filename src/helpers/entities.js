@@ -1,3 +1,5 @@
+import {map} from 'ramda';
+
 import {
     getNodeParamNormalizedValue,
 } from '/helpers/node';
@@ -7,6 +9,18 @@ import {
     FILTER_TYPES,
 } from '/constants';
 
+
+const createReverbEntity = ({id, responses, currentResponse}) => ({
+    id,
+    name: 'Reverb',
+    parameters: [{
+        name: 'Response',
+        id: 'currentResponse',
+        value: currentResponse,
+        values: Object.keys(responses),
+        type: 'radio',
+    }],
+});
 
 const createDelayEntity = ({id, time, feedback, frequency}) => ({
     id,
@@ -55,11 +69,7 @@ export const createTrackEntity = ({id, title, volume, muted, bypassFX, fx, state
     state,
     isMuted: muted,
     isEffectsDisabled: bypassFX,
-    send: {
-        delay: getNodeParamNormalizedValue(fx.delay.gain),
-        reverb: getNodeParamNormalizedValue(fx.reverb.gain),
-        distortion: getNodeParamNormalizedValue(fx.distortion.gain),
-    },
+    send: map(send => getNodeParamNormalizedValue(send.gain), fx),
 });
 
 export const createEffectEntity = effect => {
@@ -68,6 +78,8 @@ export const createEffectEntity = effect => {
             return createDelayEntity(effect);
         case 'distortion':
             return createDistortionEntity(effect);
+        case 'reverb':
+            return createReverbEntity(effect);
         default:
             return null;
     }

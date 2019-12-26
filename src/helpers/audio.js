@@ -28,11 +28,12 @@ export const createAnalyser = (context, parameters = {fftSize: 2048}) => {
     return analyser;
 };
 
-export const createTrackFromSource = curry((context, masterBus, {url, title}) => new Track({
+export const createTrackFromSource = curry(({context, masterBus, sends = []}, {url, title}) => new Track({
     url,
     title,
     context,
     masterBus,
+    sends,
 }));
 
 export const isAudioParam = (node, parameter) => node[parameter] instanceof AudioParam;

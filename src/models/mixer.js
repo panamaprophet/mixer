@@ -1,10 +1,5 @@
 'use strict';
 
-import {map} from 'ramda';
-
-import Delay from './fx/delay';
-import Reverb from './fx/reverb';
-import Distortion from './fx/distortion';
 import {
     createContext,
     createAnalyser,
@@ -28,22 +23,18 @@ import {playAll, pauseAll, rewindAll} from '/helpers/playback';
 
 
 class Mixer {
-    constructor(sources = []) {
+    constructor(sources = [], effects = []) {
         this.context = createContext();
         this.analyser = createAnalyser(this.context);
         this.masterBus = createMasterBus(this.context, [this.analyser]);
 
-        this.fx = [
-            new Delay(this.context, this.masterBus),
-            new Reverb(this.context, this.masterBus),
-            new Distortion(this.context, this.masterBus),
-        ];
-
-        const tracks = map(createTrackFromSource(this.context, this.masterBus), sources);
-
-        tracks.map(track => track.addFx(this.fx));
-
-        this.tracks = tracks;
+        this.fx = effects.map(Effect => new Effect(this.context, this.masterBus));
+        
+        this.tracks = sources.map(createTrackFromSource({
+            context: this.context,
+            masterBus: this.masterBus,
+            sends: this.fx,
+        }));
     }
 
     /**

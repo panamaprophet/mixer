@@ -4,6 +4,8 @@ import 'regenerator-runtime/runtime';
 import {any, head, filter} from 'ramda';
 
 import Mixer from '/models/mixer';
+import Delay from '/models/fx/delay';
+
 import {getNodeParamNormalizedValue} from '/helpers/node';
 
 import './mocks/';
@@ -12,9 +14,8 @@ import {trackMocks} from './mocks/config';
 
 const getTrackById = (trackId, tracks) => head(filter(track => track.id === trackId, tracks));
 
-
 describe('Mixer', () => {
-    const mx = new Mixer(trackMocks);
+    const mx = new Mixer(trackMocks, [Delay]);
 
     describe('play()', () => {
         it('starts tracks to play', async () => {

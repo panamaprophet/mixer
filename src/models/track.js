@@ -31,7 +31,7 @@ import {
 
 
 class Track {
-    constructor({url, title, context, masterBus}) {
+    constructor({url, title, context, masterBus, sends = []}) {
         this.id = generateIdByTitle(title);
 
         this.source = null;
@@ -48,11 +48,15 @@ class Track {
         this.bypassFX = false;
 
         this.state = TRACK_STATE.NOT_SET;
-
-        this.fx = {};
-
+        
         this.bus = createGainNode(context);
         connectNodes(this.bus, masterBus);
+
+        this.fx = {};
+        
+        if (sends.length > 0) {
+            this.addFx(sends);
+        }
 
         this.loadingState = this.load(url);
     }

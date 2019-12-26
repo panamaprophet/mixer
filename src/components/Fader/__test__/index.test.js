@@ -13,16 +13,16 @@ describe('<Fader />', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    describe('position', () => {
+    describe('value', () => {
         it('should be passed to thumb', () => {
-            const position = 42.0;
+            const value = 42.0;
             const wrapper = shallow(
-                <Fader position={position} />  
+                <Fader value={value} />
             );
 
             const result = wrapper.find('FaderThumb').prop('position');
 
-            expect(result).toBe(position);
+            expect(result).toBe(value);
         });
     });
 
@@ -49,7 +49,7 @@ describe('<Fader />', () => {
     });
 
     describe('onChange', () => {
-        it('should be called on position change', () => {
+        it('should be called on value change', () => {
             const onChangeMock = jest.fn();
             const wrapper = mount(
                 <Fader onChange={onChangeMock} />

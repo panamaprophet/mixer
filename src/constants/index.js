@@ -14,3 +14,9 @@ export const TRACK_STATE = {
     FAILED: 'FAILED',
     NOT_SET: 'NOT_SET',
 };
+
+export const FILTER_TYPES = {
+	LOWPASS: 'lowpass',
+	HIGHPASS: 'highpass',
+	BANDPASS: 'bandpass',
+};

@@ -4,6 +4,7 @@ import {
 
 import {
     PLAYBACK_STATUS,
+    FILTER_TYPES,
 } from '/constants';
 
 
@@ -32,6 +33,8 @@ const createDistortionEntity = ({id, filterType, frequency, strength}) => ({
         name: 'Filter Type',
         id: 'filterType',
         value: filterType,
+        values: Object.values(FILTER_TYPES),
+        type: 'radio',
     }, {
         name: 'Frequency',
         id: 'frequency',

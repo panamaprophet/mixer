@@ -1,0 +1,22 @@
+.parameter {
+    display: flex;
+    position: relative;
+    margin: 8px 8px 16px;
+}
+
+.controlContainer {
+    width: 40%;
+}
+
+.title {
+    display: inline-block;
+    width: 35%;
+    margin-right: 5%;
+    text-align: left;
+    color: #555;
+    text-shadow: 1px 1px 0 #eee;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

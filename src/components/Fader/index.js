@@ -17,7 +17,7 @@ import style from './style.css';
 
 
 const Fader = ({
-    position = 0,
+    value = 0,
     isVertical = false, 
     onChange = () => {},
 }) => {
@@ -36,11 +36,11 @@ const Fader = ({
         const containerElement = containerRef.current;
         const offset = containerElement.getBoundingClientRect();
 
-        const position = isVertical
+        const value = isVertical
             ? getPointerVerticalPosition(getY(event), offset)
             : getPointerHorizontalPosition(getX(event), offset);
 
-        onChange(position);
+        onChange(value);
     }
 
     const onMoveEnd = event => {
@@ -53,7 +53,7 @@ const Fader = ({
     return (
         <div className={classnames(style.fader, !isVertical && style.isHorisontal)} ref={containerRef}>
             <div className={style.control}>
-                <FaderThumb position={position} events={{onMouseDown: onMoveStart}} isVertical={isVertical} />
+                <FaderThumb position={value} events={{onMouseDown: onMoveStart}} isVertical={isVertical} />
             </div>
         </div>
     );

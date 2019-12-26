@@ -1,0 +1,34 @@
+.radio {
+	display: flex;
+	flex-flow: column;
+	cursor: pointer;
+}
+
+.label {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.control {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px #232323;
+}
+
+.isSelected {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.isSelected:after {
+	width: 8px;
+	height: 8px;
+	background: #232323;
+	border-radius: 50%;
+	content: '';
+}

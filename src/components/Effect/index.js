@@ -1,18 +1,9 @@
 import React from 'react';
 
-import Fader from '/components/Fader';
+import EffectParameter from '/components/EffectParameter';
 
 import style from './style.css';
 
-
-const EffectParameter = ({id, name, value, onChange}) => (
-    <div className={style.parameter} key={id}>
-        <span className={style.parameterTitle}>{name}:</span>
-        <div className={style.parameterControl}>
-            <Fader onChange={onChange(id)} position={value} />
-        </div>
-    </div>
-);
 
 const Effect = ({
     name = 'Untitled',

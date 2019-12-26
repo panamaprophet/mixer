@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EffectParameter /> should renders without any errors 1`] = `
+<div
+  className="parameter"
+  key="delay"
+>
+  <span
+    className="title"
+  >
+    Delay
+    :
+  </span>
+  <div
+    className="controlContainer"
+  >
+    <Radio
+      id="delay"
+      name="Delay"
+      type="radio"
+    />
+  </div>
+</div>
+`;

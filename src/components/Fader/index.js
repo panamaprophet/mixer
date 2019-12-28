@@ -29,7 +29,7 @@ const getEventNameByFeature = eventName => hasTouchEventsSupport() ? EVENTS_MAP[
 
 const Fader = ({
     value = 0,
-    isVertical = false, 
+    isVertical = false,
     onChange = () => {},
 }) => {
     const containerRef = useRef(null);
@@ -51,11 +51,11 @@ const Fader = ({
         const x = getX(event) - document.documentElement.scrollLeft;
         const y = getY(event) - document.documentElement.scrollTop;
 
-        const value = isVertical
+        const newValue = isVertical
             ? getPointerVerticalPosition(y, offset)
             : getPointerHorizontalPosition(x, offset);
 
-        onChange(value);
+        onChange(newValue);
 
         return false;
     }

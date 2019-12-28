@@ -8,7 +8,7 @@
 
     vertical-align: top;
 
-    color: #333;
+    color: inherit;
 }
 
 .icon_type_play {
@@ -32,7 +32,7 @@
     transform: rotate(180deg);
 
     border: 4px solid transparent;
-    border-left: 5px solid;
+    border-left: 5px solid currentColor;
 }
 
 .icon_type_rewind:before {
@@ -46,5 +46,5 @@
     content: '';
 
     border: 4px solid transparent;
-    border-left: 5px solid;
+    border-left: 5px solid currentColor;
 }

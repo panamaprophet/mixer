@@ -27,7 +27,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
         Play
       </button>
       <button
-        className="control button"
+        className="control button isButtonPressed"
         disabled={false}
         onClick={[Function]}
       >

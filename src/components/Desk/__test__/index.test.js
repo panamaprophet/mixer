@@ -1,6 +1,5 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {all} from 'ramda';
 
 import Desk from '../';
 
@@ -22,7 +21,9 @@ const REWIND_BUTTON = 2;
 describe('<Desk />', () => {
     it('should renders without any errors', () => {
         const wrapper = shallow(
-            <Desk playback={playbackMock} />
+            <Desk playback={{
+                ...playbackMock,
+            }} />
         );
 
         expect(wrapper).toMatchSnapshot();
@@ -46,7 +47,9 @@ describe('<Desk />', () => {
     describe('play button', () => {
         it('should call onPlay on press', () => {
             const onPlay = jest.fn();
-            const wrapper = shallow(<Desk onPlay={onPlay} />);
+            const wrapper = shallow(<Desk playback={{
+                ...playbackMock,
+            }} onPlay={onPlay} />);
 
             wrapper.find('button').at(PLAY_BUTTON).simulate('click');
 
@@ -68,7 +71,9 @@ describe('<Desk />', () => {
     describe('pause button', () => {
         it('should call onPause on press', () => {
             const onPause = jest.fn();
-            const wrapper = shallow(<Desk onPause={onPause} />);
+            const wrapper = shallow(<Desk playback={{
+                ...playbackMock,
+            }} onPause={onPause} />);
 
             wrapper.find('button').at(PAUSE_BUTTON).simulate('click');
 
@@ -91,7 +96,9 @@ describe('<Desk />', () => {
     describe('rewind button', () => {
         it('should call onRewind on press', () => {
             const onRewind = jest.fn();
-            const wrapper = shallow(<Desk onRewind={onRewind} />);
+            const wrapper = shallow(<Desk playback={{
+                ...playbackMock,
+            }} onRewind={onRewind} />);
 
             wrapper.find('button').at(REWIND_BUTTON).simulate('click');
 

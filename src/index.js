@@ -7,8 +7,12 @@ import Desk from '/containers/Desk';
 import Context from '/containers/Context';
 
 import {initialState} from '/store';
+import {mixdesk} from '/store/mixdesk';
 import {reducer} from '/store/reducers';
-import {setTracksStatusesOnLoad, getDispatchWithLog} from '/store/helpers';
+import {
+    setReadyStateOnLoad,
+    getDispatchWithLog,
+} from '/store/helpers';
 
 
 const App = () => {
@@ -16,7 +20,7 @@ const App = () => {
     const dispatchWithLog = getDispatchWithLog(dispatch);
 
     useEffect(() => {
-        setTracksStatusesOnLoad(dispatchWithLog);
+        setReadyStateOnLoad(dispatchWithLog, mixdesk);
     }, []);
 
     return (

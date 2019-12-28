@@ -1,7 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import {any, head, filter} from 'ramda';
+import {all, head, filter} from 'ramda';
 
 import Mixer from '/models/mixer';
 import Delay from '/models/fx/delay';
@@ -21,7 +21,7 @@ describe('Mixer', () => {
         it('starts tracks to play', async () => {
             await mx.play();
 
-            const result = any(({playing}) => playing, mx.tracks);
+            const result = all(({playing}) => playing, mx.tracks);
 
             expect(result).toBe(true);
         });
@@ -32,7 +32,7 @@ describe('Mixer', () => {
             await mx.play();
             await mx.pause();
 
-            const result = any(({playing}) => playing === false, mx.tracks);
+            const result = all(({playing}) => playing === false, mx.tracks);
 
             expect(result).toBe(true);
         });

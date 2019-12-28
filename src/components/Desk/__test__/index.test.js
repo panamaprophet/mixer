@@ -1,5 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import {all} from 'ramda';
 
 import Desk from '../';
 
@@ -20,11 +21,26 @@ const REWIND_BUTTON = 2;
 
 describe('<Desk />', () => {
     it('should renders without any errors', () => {
-        const result = shallow(
+        const wrapper = shallow(
             <Desk playback={playbackMock} />
         );
 
-        expect(result).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
+    });
+
+    describe('playback buttons', () => {
+        it('should be disabled if mixdesk is not active', () => {
+            const wrapper = shallow(
+                <Desk playback={{
+                    ...playbackMock,
+                    status: PLAYBACK_STATUS.NOT_SET,
+                }} />
+            );
+
+            const result = wrapper.find('button[disabled]').length;
+
+            expect(result).toBe(3);
+        });
     });
 
     describe('play button', () => {

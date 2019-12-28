@@ -17,13 +17,23 @@ const rewind = state => ({
     ...state,
     currentPosition: 0,
     status: PLAYBACK_STATUS.PLAYING,
-})
+});
+
+const setPlaybackReady = state => ({
+    ...state,
+    status: PLAYBACK_STATUS.READY,
+});
 
 export const playbackReducer = (playback, action) => {
     switch (action.type) {
-        case 'CONTROLS_PLAY': return play(playback);
-        case 'CONTROLS_PAUSE': return pause(playback);
-        case 'CONTROLS_REWIND': return rewind(playback);
+        case 'PLAYBACK_PLAY':
+            return play(playback);
+        case 'PLAYBACK_PAUSE':
+            return pause(playback);
+        case 'PLAYBACK_REWIND': 
+            return rewind(playback);
+        case 'PLAYBACK_READY': 
+            return setPlaybackReady(playback);
         default:
             return playback;
     }

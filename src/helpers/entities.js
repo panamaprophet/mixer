@@ -87,7 +87,11 @@ export const createEffectEntity = effect => {
     }
 };
 
-export const createPlaybackEntity = ({analyser, status = PLAYBACK_STATUS.PAUSED, currentPosition = 0}) => ({
+export const createPlaybackEntity = ({
+    analyser,
+    status = PLAYBACK_STATUS.NOT_SET,
+    currentPosition = 0,
+}) => ({
     analyser,
     status,
     currentPosition,

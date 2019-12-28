@@ -1,9 +1,4 @@
-import React, {useEffect} from 'react';
 import {map, curry, reject, not} from 'ramda';
-
-import {
-    TRACK_STATE,
-} from '/constants';
 
 import {
     createEffectEntity,
@@ -40,10 +35,13 @@ const dispatchSetTrackState = curry((dispatch, {id, state}) => dispatch({
  * @param {function} — dispatch
  * @returns {Promise<Track[]>}
  */
-export const setTracksStatusesOnLoad = dispatch => 
+export const setReadyStateOnLoad = (dispatch, mixdesk) => 
     Promise
         .all(getLoadingStates(mixdesk))
-        .then(map(dispatchSetTrackState(dispatch)));
+        .then(map(dispatchSetTrackState(dispatch)))
+        .then(() => dispatch({
+            type: 'PLAYBACK_READY',
+        }));
 
 /**
  * Brings dispatch arguments to console

@@ -1,4 +1,4 @@
-import {map} from 'ramda';
+import {map, not} from 'ramda';
 
 import {
     PLAYBACK_STATUS,
@@ -8,6 +8,15 @@ import {
 export const isPlaying = playback => playback.status === PLAYBACK_STATUS.PLAYING;
 
 export const isPaused = playback => playback.status === PLAYBACK_STATUS.PAUSED && playback.currentPosition !== 0;
+
+export const isReady = playback => playback.status === PLAYBACK_STATUS.READY;
+
+export const isActive = playback => [
+    PLAYBACK_STATUS.NOT_SET,
+    PLAYBACK_STATUS.FAILED,
+].includes(playback.status) === false;
+
+export const isNotActive = playback => not(isActive(playback));
 
 export const playAll = map(track => track.play());
 

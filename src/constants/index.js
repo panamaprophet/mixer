@@ -1,6 +1,9 @@
 export const PLAYBACK_STATUS = {
-    'PLAYING': 'PLAYING',
-    'PAUSED': 'PAUSED',
+    PLAYING: 'PLAYING',
+    PAUSED: 'PAUSED',
+    READY: 'READY',
+    FAILED: 'FAILED',
+    NOT_SET: 'NOT_SET',
 };
 
 export const CONTEXT_STATE = {

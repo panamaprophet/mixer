@@ -18,6 +18,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
       />
       <button
         className="control button"
+        disabled={false}
         onClick={[Function]}
       >
         <Icon
@@ -27,6 +28,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
       </button>
       <button
         className="control button"
+        disabled={false}
         onClick={[Function]}
       >
         <Icon
@@ -36,6 +38,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
       </button>
       <button
         className="control button"
+        disabled={false}
         onClick={[Function]}
       >
         <Icon

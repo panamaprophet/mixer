@@ -16,6 +16,17 @@ import {
 import style from './style.css';
 
 
+const EVENTS_MAP = {
+    'mousemove': 'touchmove',
+    'mouseup': 'touchend',
+    'mousedown': 'touchstart',
+};
+
+const hasTouchEventsSupport = () => 'ontouchstart' in window;
+
+const getEventNameByFeature = eventName => hasTouchEventsSupport() ? EVENTS_MAP[eventName] : eventName;
+
+
 const Fader = ({
     value = 0,
     isVertical = false, 
@@ -26,8 +37,10 @@ const Fader = ({
     const onMoveStart = event => {
         event.preventDefault();
 
-        document.documentElement.addEventListener('mousemove', onMove);
-        document.documentElement.addEventListener('mouseup', onMoveEnd);
+        document.documentElement.addEventListener(getEventNameByFeature('mousemove'), onMove);
+        document.documentElement.addEventListener(getEventNameByFeature('mouseup'), onMoveEnd);
+
+        return false;
     }
 
     const onMove = event => {
@@ -35,25 +48,33 @@ const Fader = ({
 
         const containerElement = containerRef.current;
         const offset = containerElement.getBoundingClientRect();
+        const x = getX(event) - document.documentElement.scrollLeft;
+        const y = getY(event) - document.documentElement.scrollTop;
 
         const value = isVertical
-            ? getPointerVerticalPosition(getY(event), offset)
-            : getPointerHorizontalPosition(getX(event), offset);
+            ? getPointerVerticalPosition(y, offset)
+            : getPointerHorizontalPosition(x, offset);
 
         onChange(value);
+
+        return false;
     }
 
     const onMoveEnd = event => {
         event.preventDefault();
 
-        document.documentElement.removeEventListener('mousemove', onMove);
-        document.documentElement.removeEventListener('mouseup', onMoveEnd);
+        document.documentElement.removeEventListener(getEventNameByFeature('mousemove'), onMove);
+        document.documentElement.removeEventListener(getEventNameByFeature('mouseup'), onMoveEnd);
+
+        return false;
     }
+    
+    const thumbEventName = hasTouchEventsSupport() ? 'onTouchStart' : 'onMouseDown';
 
     return (
         <div className={classnames(style.fader, !isVertical && style.isHorisontal)} ref={containerRef}>
             <div className={style.control}>
-                <FaderThumb position={value} events={{onMouseDown: onMoveStart}} isVertical={isVertical} />
+                <FaderThumb position={value} events={{[thumbEventName]: onMoveStart}} isVertical={isVertical} />
             </div>
         </div>
     );

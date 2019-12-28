@@ -18,7 +18,7 @@ const Radio = ({
                 onClick={() => onChange(value)}
             >
                 <div className={classnames(style.control, (value === currentValue) && style.isSelected)} />
-                {value}
+                <div className={style.title}>{value}</div>
             </div>
         ))}
     </div>

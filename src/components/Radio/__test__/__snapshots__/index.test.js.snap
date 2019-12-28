@@ -12,7 +12,11 @@ exports[`<Radio /> should renders without any errors 1`] = `
     <div
       className="control isSelected"
     />
-    one
+    <div
+      className="title"
+    >
+      one
+    </div>
   </div>
   <div
     className="label"
@@ -22,7 +26,11 @@ exports[`<Radio /> should renders without any errors 1`] = `
     <div
       className="control"
     />
-    two
+    <div
+      className="title"
+    >
+      two
+    </div>
   </div>
   <div
     className="label"
@@ -32,7 +40,11 @@ exports[`<Radio /> should renders without any errors 1`] = `
     <div
       className="control"
     />
-    three
+    <div
+      className="title"
+    >
+      three
+    </div>
   </div>
 </div>
 `;

@@ -1,22 +1,26 @@
 .effect {
-  margin: 8px auto 0;
-  background: #c4cace; /* url("i/metal-texture-small.jpg"); */
-  background-size: contain;
-  box-shadow: 0 0 3px #000;
-  border-radius: 4px;
-  overflow: hidden;
-  width: 100%;
+    overflow: hidden;
+
+    width: 100%;
+    margin: 8px auto 0;
+
+    border-radius: 4px;
+    background: #c4cace; /* url("i/metal-texture-small.jpg"); */
+    background-size: contain;
+    box-shadow: 0 0 3px #000;
 }
 
 .title {
-  font-weight: bold;
-  margin-bottom: 16px;
-  padding: 8px 16px;
-  background: #1b5e20;
-  color: rgba(255,255,255,0.87);
-  border-radius: 4px 4px 0 0;
+    font-weight: bold;
+
+    margin-bottom: 16px;
+    padding: 8px 16px;
+
+    color: rgba(255,255,255,.87);
+    border-radius: 4px 4px 0 0;
+    background: #1b5e20;
 }
 
 .effect:not(:first-child) .title {
-  background: #827717;
+    background: #827717;
 }

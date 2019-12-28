@@ -60,7 +60,9 @@ const createDistortionEntity = ({id, filterType, frequency, strength}) => ({
     }],
 });
 
+
 export const generateIdByTitle = title => title.replace(/[^A-Za-z0-9]+/gi, '').toLowerCase();
+
 
 export const createTrackEntity = ({id, title, volume, muted, bypassFX, fx, state}) => ({
     id,

@@ -1,73 +1,108 @@
 .desk {
-  width: 100%;
-  height: 640px;
-  margin: 0 auto;
-  position: relative;
-  user-select: none;
-  font-size: 0.8em;
-  border-radius: 4px;
-  padding: 0;
-  background: none;
-  margin-right: 8px;
-  display: flex;
+    font-size: .8em;
+
+    position: relative;
+
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 620px;
+    padding: 0;
+
+    user-select: none;
+
+    border-radius: 4px;
+    background: none;
 }
 
 .controlsContainer {
-  border-radius: 4px;
-  padding: 0;
-  background: none;
-  flex-shrink: 0;
-  margin-left: 16px;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    max-width: 35%;
+    padding: 0;
+
+    border-radius: 4px;
+    background: none;
 }
 
 .tracks {
-  display: flex;
-  flex-flow: row nowrap;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 0 3px #000;
-  border-radius: 4px;
-  overflow: hidden;
+    display: flex;
+    overflow: hidden;
+    flex-flow: row nowrap;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    max-width: 63%;
+    height: 100%;
+
+    border-radius: 4px;
+    box-shadow: 0 0 3px #000;
 }
 
 .controls {
-/*margin: 32px auto 16px*/
-  font-size: 0;
-  padding: 16px;
-  background: #c4cace; /* url("i/metal-texture-small.jpg"); */
-  background-size: contain;
-  box-shadow: 0 0 3px #000;
-  border-radius: 4px 4px 0 0;
+    font-size: 0;
+
+    display: flex;
+    flex-flow: row wrap;
+
+    margin-bottom: 2px;
+    padding: 16px;
+
+    border-radius: 4px 4px 0 0;
+    background: #c4cace; /* url("i/metal-texture-small.jpg"); */
+    background-size: contain;
+    box-shadow: 0 0 3px #000;
 }
 
 .button {
-  padding: 8px 16px;
-  border: none;
-  background: #fff;
-  outline: none;
-  margin-right: 1px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: capitalize;
-  text-shadow: 1px 0 0 #fff;
-  transition: all 80ms ease-in-out;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2), inset 0 0 1px 2px rgba(255,255,255,0.9), inset 0 -6px 5px rgba(0,0,0,0.1), 0 6px 7px rgba(0,0,0,0.3), 0 4px 1px rgba(0,0,0,0.5);
+    font-size: .8rem;
+    font-weight: bold;
+
+    flex-grow: 1;
+
+    margin-right: 1px;
+    padding: 8px 16px;
+
+    cursor: pointer;
+    transition: all 80ms ease-in-out;
+    text-transform: capitalize;
+
+    border: none;
+    outline: none;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.2), inset 0 0 1px 2px rgba(255,255,255,.9), inset 0 -6px 5px rgba(0,0,0,.1), 0 6px 7px rgba(0,0,0,.3), 0 4px 1px rgba(0,0,0,.5);
+    text-shadow: 1px 0 0 #fff;
 }
 
 .button:hover {
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2), inset 0 0 1px 2px rgba(255,255,255,0.9), inset 0 -10px 15px rgba(0,0,0,0.1), 0 6px 7px rgba(0,0,0,0.3), 0 4px 1px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.2), inset 0 0 1px 2px rgba(255,255,255,.9), inset 0 -10px 15px rgba(0,0,0,.1), 0 6px 7px rgba(0,0,0,.3), 0 4px 1px rgba(0,0,0,.5);
 }
 
 .button:active,
 .isButtonPressed {
-  transform: translateY(2px);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18), inset 0 0 1px 2px rgba(255,255,255,0.5), inset 0 -6px 5px rgba(0,0,0,0.1), 0 6px 7px rgba(0,0,0,0.3), 0 2px 1px rgba(0,0,0,0.5);
+    transform: translateY(2px);
+
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.18), inset 0 0 1px 2px rgba(255,255,255,.5), inset 0 -6px 5px rgba(0,0,0,.1), 0 6px 7px rgba(0,0,0,.3), 0 2px 1px rgba(0,0,0,.5);
 }
 
 .effects {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  flex-flow: column wrap;
+    font-size: .8rem;
+
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
+
+
+@media only screen and (max-width: 375px) {
+    .tracks,
+    .controlsContainer
+    {
+        max-width: 100%;
+        margin-bottom: 8px;
+    }
 }

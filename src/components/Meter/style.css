@@ -1,17 +1,23 @@
 .meter {
     position: relative;
+
+    width: 100%;
     margin-bottom: 8px;
+
     background: #555;
 }
 .meter:after {
-    box-shadow: inset 0 0 10px #000;
-    content: '';
     position: absolute;
+    z-index: 12;
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
-    z-index: 12;
+
+    content: '';
+
+    box-shadow: inset 0 0 10px #000;
 }
 .meterValue {
     position: relative;

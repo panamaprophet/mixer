@@ -7,9 +7,9 @@ import {
 import FX from './fx-base';
 
 
-const DEFAULT_FEEDBACK = 0.8;
-const DEFAULT_TIME = 0.25;
-const DEFAULT_FREQUENCY = 1120;
+const DEFAULT_FEEDBACK = 80;
+const DEFAULT_TIME = 25;
+const DEFAULT_FREQUENCY = 5; // 1120 of 20000 in percents
 
 export default class Delay extends FX {
     constructor(context, masterBus) {

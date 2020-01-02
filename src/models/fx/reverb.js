@@ -7,9 +7,9 @@ import {fetchAudioAsArrayBuffer} from '/helpers/audio';
 
 
 const RESPONSES = {
-    'Versatile': 'assets/audio/impulse-response/reverb-impulse-response-1.wav',
-    'Pattan': 'assets/audio/impulse-response/reverb-impulse-response-2.wav',
-    'Style': 'assets/audio/impulse-response/reverb-impulse-response-3.wav',
+    'Versatile': 'assets/audio/impulse-response/impulse-1.mp3',
+    'Pattan': 'assets/audio/impulse-response/impulse-2.mp3',
+    'Style': 'assets/audio/impulse-response/impulse-3.mp3',
 };
 
 export default class Reverb extends FX {

@@ -104,6 +104,21 @@ class Mixer {
 
     /**
      * @param {TrackId} trackId 
+     * @param {number} value
+     * @returns {Promise<Track[]>}
+     */
+    async setTrackPanLevel(trackId, value) {
+        return this.tracks.map(track => {
+            if (track.id === trackId) {
+                track.pan = value;
+            }
+
+            return track;
+        });
+    }
+
+    /**
+     * @param {TrackId} trackId 
      * @returns {Promise<Track[]>}
      */
     async toggleTrack(trackId) {

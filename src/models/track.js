@@ -1,7 +1,7 @@
 'use strict';
 
 import {generateIdByTitle} from '/helpers/entities';
-import {fetchAudioAsArrayBuffer} from '/helpers/audio';
+import {fetchAudioAsArrayBuffer, createPanner} from '/helpers/audio';
 
 import {
     connectNodes,
@@ -50,7 +50,10 @@ class Track {
         this.state = TRACK_STATE.NOT_SET;
         
         this.bus = createGainNode(context);
-        connectNodes(this.bus, masterBus);
+        this.panner = createPanner(context);
+
+        connectNodes(this.bus, this.panner);
+        connectNodes(this.panner, masterBus);
 
         this.fx = {};
         
@@ -72,6 +75,14 @@ class Track {
         } else {
             setNodeParamNormalizedValue(this.bus.gain, value);
         }
+    }
+
+    get pan() {
+        return getNodeParamNormalizedValue(this.panner.pan);
+    }
+
+    set pan(value) {
+        return setNodeParamNormalizedValue(this.panner.pan, value);
     }
 
     load(url) {

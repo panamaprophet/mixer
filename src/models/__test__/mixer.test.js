@@ -52,6 +52,20 @@ describe('Mixer', () => {
         });
     });
 
+    describe('setTrackPanLevel', () => {
+        it('changes specified track pan', async () => {
+            const trackId = 'drums';
+            const pan = 42.0;
+
+            await mx.setTrackPanLevel(trackId, pan);
+
+            const track = getTrackById(trackId, mx.tracks);
+            const result = track.pan;
+
+            expect(result).toBe(pan);
+        });
+    });
+
     describe('setTrackSendLevel()', () => {
         it('changes specified track send level', async () => {
             const trackId = 'drums';

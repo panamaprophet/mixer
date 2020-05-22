@@ -28,6 +28,16 @@ describe('Track', () => {
             expect(track.volume).toBe(volume);
         });
     });
+
+    describe('pan', () => {
+        it('sets correctly', () => {
+            const pan = 42.0;
+
+            track.pan = pan;
+
+            expect(track.pan).toBe(pan);
+        });
+    })
     
     describe('play()', () => {
         it('starts to play track', () => {

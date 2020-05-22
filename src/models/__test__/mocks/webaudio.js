@@ -43,6 +43,15 @@ export class DelayMock extends AudioNodeMock {
     }
 }
 
+export class StereoPannerMock extends AudioNodeMock {
+    constructor() {
+        super();
+
+        this.pan = new AudioParamMock();
+        this.pan.value = 0;
+    }
+}
+
 export class AudioBufferSourceNodeMock extends AudioNodeMock {
     start() {}
     stop() {}
@@ -78,5 +87,8 @@ export class AudioContextMock {
     }
     createBufferSource() {
         return new AudioBufferSourceNodeMock();
+    }
+    createStereoPanner() {
+        return new StereoPannerMock();
     }
 }

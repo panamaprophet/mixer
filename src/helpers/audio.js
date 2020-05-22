@@ -28,6 +28,8 @@ export const createAnalyser = (context, parameters = {fftSize: 2048}) => {
     return analyser;
 };
 
+export const createPanner = context => context.createStereoPanner();
+
 export const createTrackFromSource = curry(({context, masterBus, sends = []}, {url, title}) => new Track({
     url,
     title,

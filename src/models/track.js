@@ -14,20 +14,10 @@ import {
     TRACK_STATE,
 } from '/constants';
 
-/**
- * @typedef {string} TrackId
- */
 
- /**
-  * @typedef {string} SendId
-  */
+// type TrackId = string;
 
-/**
- * @typedef {Object} Track
- * @property {number} volume — value normalized between 0 .. 100
- * @property {string} title
- * @property {TrackId} id
- */
+// type SendId = string;
 
 
 class Track {
@@ -48,7 +38,7 @@ class Track {
         this.bypassFX = false;
 
         this.state = TRACK_STATE.NOT_SET;
-        
+
         this.bus = createGainNode(context);
         this.panner = createPanner(context);
 
@@ -56,7 +46,7 @@ class Track {
         connectNodes(this.panner, masterBus);
 
         this.fx = {};
-        
+
         if (sends.length > 0) {
             this.addFx(sends);
         }
@@ -82,13 +72,13 @@ class Track {
     }
 
     set pan(value) {
-        return setNodeParamNormalizedValue(this.panner.pan, value);
+        setNodeParamNormalizedValue(this.panner.pan, value);
     }
 
     load(url) {
         return fetchAudioAsArrayBuffer(url)
             .then(audioBuffer => {
-                return new Promise((resolve, reject) => 
+                return new Promise((resolve, reject) =>
                     this.context.decodeAudioData(audioBuffer, resolve, reject));
             })
             .then(decodedAudioData => {

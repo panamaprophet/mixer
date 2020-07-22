@@ -5,6 +5,13 @@ import {
 } from '/constants';
 
 
+type Track = {
+	play: () => void,
+	pause: () => void,
+	stop: () => void,
+};
+
+
 export const isPlaying = playback => playback.status === PLAYBACK_STATUS.PLAYING;
 
 export const isPaused = playback => playback.status === PLAYBACK_STATUS.PAUSED; //@TODO: && playback.currentPosition !== 0;
@@ -15,11 +22,11 @@ export const isActive = playback => (isPlaying(playback) || isPaused(playback) |
 
 export const isNotActive = playback => not(isActive(playback));
 
-export const playAll = map(track => track.play());
+export const playAll = map((track: Track) => track.play());
 
-export const pauseAll = map(track => track.pause());
+export const pauseAll = map((track: Track) => track.pause());
 
-export const rewindAll = map(track => {
+export const rewindAll = map((track: Track) => {
     track.stop();
     track.play();
 });

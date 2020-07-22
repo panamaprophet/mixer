@@ -27,12 +27,19 @@ const hasTouchEventsSupport = () => 'ontouchstart' in window;
 const getEventNameByFeature = eventName => hasTouchEventsSupport() ? EVENTS_MAP[eventName] : eventName;
 
 
+type Props = {
+    value: number,
+    isVertical: boolean,
+    onChange: (value) => void,
+};
+
+
 const Fader = ({
     value = 0,
     isVertical = false,
-    onChange = () => {},
-}) => {
-    const containerRef = useRef(null);
+    onChange = (value) => {},
+}: Props) => {
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const onMoveStart = event => {
         event.preventDefault();
@@ -47,15 +54,18 @@ const Fader = ({
         event.preventDefault();
 
         const containerElement = containerRef.current;
-        const offset = containerElement.getBoundingClientRect();
-        const x = getX(event) - document.documentElement.scrollLeft;
-        const y = getY(event) - document.documentElement.scrollTop;
 
-        const newValue = isVertical
-            ? getPointerVerticalPosition(y, offset)
-            : getPointerHorizontalPosition(x, offset);
+        if (containerElement) {
+            const offset = containerElement.getBoundingClientRect();
+            const x = getX(event) - document.documentElement.scrollLeft;
+            const y = getY(event) - document.documentElement.scrollTop;
 
-        onChange(newValue);
+            const newValue = isVertical
+                ? getPointerVerticalPosition(y, offset)
+                : getPointerHorizontalPosition(x, offset);
+
+            onChange(newValue);
+        }
 
         return false;
     }

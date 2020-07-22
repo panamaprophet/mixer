@@ -53,7 +53,7 @@ export const setNodeParams = (node, params) => keys(params).forEach(key => {
     return node;
 });
 
-export const connectNodes = (source, destination) => 
+export const connectNodes = (source, destination) =>
     source.connect(destination);
 
 export const connectNodesSingle = (source, destination) => {

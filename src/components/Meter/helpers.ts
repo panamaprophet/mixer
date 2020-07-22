@@ -13,6 +13,9 @@ const COLOR_RED = '#861615';
 export const createMeterGradient = (context, {
     width,
     height,
+}: {
+	width: number,
+	height: number,
 }) => {
     const gradient = context.createLinearGradient(0, 0, width, height);
 

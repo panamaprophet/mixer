@@ -35,7 +35,7 @@ const dispatchSetTrackState = curry((dispatch, {id, state}) => dispatch({
  * @param {function} — dispatch
  * @returns {Promise<Track[]>}
  */
-export const setReadyStateOnLoad = (dispatch, mixdesk) => 
+export const setReadyStateOnLoad = (dispatch, mixdesk) =>
     Promise
         .all(getLoadingStates(mixdesk))
         .then(map(dispatchSetTrackState(dispatch)))

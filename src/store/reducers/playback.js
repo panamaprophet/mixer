@@ -30,9 +30,9 @@ export const playbackReducer = (playback, action) => {
             return play(playback);
         case 'PLAYBACK_PAUSE':
             return pause(playback);
-        case 'PLAYBACK_REWIND': 
+        case 'PLAYBACK_REWIND':
             return rewind(playback);
-        case 'PLAYBACK_READY': 
+        case 'PLAYBACK_READY':
             return setPlaybackReady(playback);
         default:
             return playback;

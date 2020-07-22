@@ -14,10 +14,11 @@ const Meter = ({
         return null;
     }
 
-    const canvasRef = useRef(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        const context = canvasRef.current.getContext('2d');
+        const currentCanvasRef: any = canvasRef.current;
+        const context = currentCanvasRef.getContext('2d');
         const array = new Uint8Array(analyser.frequencyBinCount);
 
         const drawMeter = () => {

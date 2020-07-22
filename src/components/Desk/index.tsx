@@ -13,8 +13,19 @@ import {
 import style from './style.css';
 
 
+type Props = {
+    playback: any,
+    onPlay: () => void,
+    onPause: () => void,
+    onRewind: () => void,
+    tracks: Array<Object>,
+    effects: Array<Object>,
+    children: any,
+}
+
+
 const Desk = ({
-    playback = {},
+    playback = { analyser: null },
 
     onPlay = () => {},
     onPause = () => {},
@@ -22,8 +33,8 @@ const Desk = ({
 
     tracks = [],
     effects = [],
-}) => {
-    const btnClassNames = isButtonPressed => classnames(
+}: Props) => {
+    const btnClassNames = (isButtonPressed: boolean) => classnames(
         style.control,
         style.button,
         isButtonPressed && style.isButtonPressed,
@@ -41,8 +52,8 @@ const Desk = ({
                 <div className={style.controls}>
                     {playback.analyser && <Meter analyser={playback.analyser} />}
 
-                    <button 
-                        className={btnClassNames(isPlaying(playback))} 
+                    <button
+                        className={btnClassNames(isPlaying(playback))}
                         onClick={onPlay}
                         disabled={isDisabled}
                     >
@@ -50,8 +61,8 @@ const Desk = ({
                         Play
                     </button>
 
-                    <button 
-                        className={btnClassNames(isPaused(playback))} 
+                    <button
+                        className={btnClassNames(isPaused(playback))}
                         onClick={onPause}
                         disabled={isDisabled}
                     >
@@ -59,7 +70,7 @@ const Desk = ({
                         Pause
                     </button>
 
-                    <button 
+                    <button
                         className={btnClassNames(false)}
                         onClick={onRewind}
                         disabled={isDisabled}

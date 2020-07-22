@@ -26,7 +26,7 @@ const EffectParameter = ({
 
     const Control = getControlByType(type);
 
-    return Control 
+    return Control
     ? (
         <div className={style.parameter} key={id}>
             <span className={style.title}>{name}:</span>

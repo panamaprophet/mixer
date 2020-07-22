@@ -29,7 +29,7 @@ const Track = ({
                 onClick={() => onMute(id)}>
                     Mute
             </button>
-            <button 
+            <button
                 className={classnames(style.button, isEffectsDisabled && style.isPressed)}
                 onClick={() => onBypass(id)}>
                     Bypass FX

@@ -12,9 +12,9 @@ const EffectContainer = props => {
     const dispatch = useContext(Context);
 
     return (
-        <Effect 
-            {...props} 
-            onParamChange={setSendParamValue(dispatch, props.id)} 
+        <Effect
+            {...props}
+            onParamChange={setSendParamValue(dispatch, props.id)}
         />
     );
 };

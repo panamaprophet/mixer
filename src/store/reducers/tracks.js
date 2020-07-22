@@ -87,6 +87,8 @@ export const trackReducer = (tracks, {type, payload}) => {
                 payload.trackId,
                 tracks,
             );
+        case 'SET_TRACKS':
+            return [...payload];
         default:
             return tracks;
     }

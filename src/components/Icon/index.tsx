@@ -7,7 +7,7 @@ import style from './style.css';
 type IconType = 'play' | 'pause' | 'rewind';
 
 type Props = {
-	type: IconType,
+    type: IconType,
 };
 
 

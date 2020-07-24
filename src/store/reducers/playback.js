@@ -34,6 +34,8 @@ export const playbackReducer = (playback, action) => {
             return rewind(playback);
         case 'PLAYBACK_READY':
             return setPlaybackReady(playback);
+        case 'SET_PLAYBACK':
+            return action.payload;
         default:
             return playback;
     }

@@ -6,9 +6,9 @@ import {
 
 
 type Track = {
-	play: () => void,
-	pause: () => void,
-	stop: () => void,
+    play: () => void,
+    pause: () => void,
+    stop: () => void,
 };
 
 
@@ -30,3 +30,5 @@ export const rewindAll = map((track: Track) => {
     track.stop();
     track.play();
 });
+
+export const stopAll = map((track: Track) => track.stop());

@@ -15,11 +15,6 @@ import {
 } from '/constants';
 
 
-// type TrackId = string;
-
-// type SendId = string;
-
-
 class Track {
     constructor({url, title, context, masterBus, sends = []}) {
         this.id = generateIdByTitle(title);

@@ -28,6 +28,8 @@ export const effectReducer = (effects, {type, payload}) => {
                 payload.value,
                 effects
             );
+        case 'SET_EFFECTS':
+            return [...payload];
         default:
             return effects;
     }

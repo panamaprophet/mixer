@@ -6,8 +6,6 @@ import {
     createTrackEntity,
 } from '/helpers/entities';
 
-import {mixdesk} from './mixdesk';
-
 
 const compact = reject(item => not(Boolean(item)));
 
@@ -28,20 +26,6 @@ const dispatchSetTrackState = curry((dispatch, {id, state}) => dispatch({
         state,
     },
 }));
-
-/**
- * Updates tracks statuses in store
- *
- * @param {function} — dispatch
- * @returns {Promise<Track[]>}
- */
-export const setReadyStateOnLoad = (dispatch, mixdesk) =>
-    Promise
-        .all(getLoadingStates(mixdesk))
-        .then(map(dispatchSetTrackState(dispatch)))
-        .then(() => dispatch({
-            type: 'PLAYBACK_READY',
-        }));
 
 /**
  * Brings dispatch arguments to console

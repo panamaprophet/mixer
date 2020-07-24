@@ -19,7 +19,7 @@ export const TRACK_STATE = {
 };
 
 export const FILTER_TYPES = {
-	LOWPASS: 'lowpass',
-	HIGHPASS: 'highpass',
-	BANDPASS: 'bandpass',
+    LOWPASS: 'lowpass',
+    HIGHPASS: 'highpass',
+    BANDPASS: 'bandpass',
 };

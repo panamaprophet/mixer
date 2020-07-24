@@ -18,21 +18,22 @@ type Props = {
 }
 
 
-const DeskContainer = ({
-    tracks,
-    effects,
-    playback,
-}: Props) => {
-    const dispatch = useContext(Context);
+const DeskContainer = (props) => {
+    const context = useContext(Context);
+    const {
+        tracks = [],
+        effects = [],
+        playback,
+    } = props;
 
     const Tracks = tracks.map(track => (<Track {...track} key={track.id} />));
     const Effects = effects.map(effect => (<Effect {...effect} key={effect.id} />));
 
     return (
         <Desk
-            onPlay={() => play(dispatch)}
-            onPause={() => pause(dispatch)}
-            onRewind={() => rewind(dispatch)}
+            onPlay={() => play(context)}
+            onPause={() => pause(context)}
+            onRewind={() => rewind(context)}
 
             tracks={Tracks}
             effects={Effects}

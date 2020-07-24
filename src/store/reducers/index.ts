@@ -4,9 +4,9 @@ import {playbackReducer} from './playback';
 
 
 type State = {
-	tracks: any,
-	effects: any,
-	playback: any,
+    tracks: any,
+    effects: any,
+    playback: any,
 };
 
 export const reducer = (state: State, action): State => {

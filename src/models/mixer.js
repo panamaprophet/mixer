@@ -1,16 +1,10 @@
 'use strict';
 
-import {
-    createContext,
-    createAnalyser,
-    createMasterBus,
-    createTrackFromSource,
-    isContextRunning,
-    resumeContext,
-} from '/helpers/audio';
+import {createContext, createAnalyser, createMasterBus, isContextRunning, resumeContext} from '/helpers/audio';
 import {setNodeParams,setNodeParamNormalizedValue} from '/helpers/node';
-import {playAll, pauseAll, rewindAll} from '/helpers/playback';
+import {playAll, pauseAll, rewindAll, stopAll} from '/helpers/playback';
 
+import Track from './track';
 
 /**
  * @typedef {Object} Mixer
@@ -20,7 +14,6 @@ import {playAll, pauseAll, rewindAll} from '/helpers/playback';
  * @property {Track[]} tracks
  * @property {Send[]} fx
  */
-
 
 class Mixer {
     constructor(sources = [], effects = []) {
@@ -62,6 +55,15 @@ class Mixer {
      */
     async rewind() {
         rewindAll(this.tracks);
+
+        return this;
+    }
+
+    /**
+     * @returns {Promise<Mixer>}
+     */
+    async stop() {
+        stopAll(this.tracks);
 
         return this;
     }
@@ -158,7 +160,9 @@ class Mixer {
     }
 
     load(sources) {
-        this.tracks = sources.map(createTrackFromSource({
+        this.tracks = sources.map(({url, title}) => new Track({
+            url,
+            title,
             context: this.context,
             masterBus: this.masterBus,
             sends: this.fx,

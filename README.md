@@ -4,4 +4,15 @@
 
 Mix desk application based on WebAudio API.
 
-Demo: https://panamaprophet.com/mixdesk/
+## Example:
+
+Check it out live: https://panamaprophet.com/mixdesk/
+
+```javascript
+import {Mixdesk} from 'mixer';
+import {tracks} from '/config';
+
+...
+
+<Mixdesk tracks={tracks} />
+```

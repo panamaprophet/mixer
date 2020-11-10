@@ -1,51 +1,54 @@
 import {useRef, useReducer, useEffect} from 'react';
+import {reducer} from '/store/reducers/index';
+import {getDispatchWithLog, createState} from '../../store/index';
+import {Mixer} from '/models/mixer';
+import {Delay, Reverb, Distortion, SendConstructor} from '/models/sends/index';
+import {PlaybackStatus} from '/helpers/playback';
+import type {MixerContext} from '/containers/Context/index';
+import type {TrackSource} from '/models/track';
 
-import {reducer} from '/store/reducers';
-import {getDispatchWithLog, createState} from '/store/helpers';
 
-import Mixer from '/models/mixer';
-import Delay from '/models/fx/delay';
-import Reverb from '/models/fx/reverb';
-import Distortion from '/models/fx/distortion';
-
-
-const useMixer = (tracks, effects = [Delay, Reverb, Distortion]) => {
-    const mx = useRef();
+export const useMixer = (tracks: TrackSource[], effects: SendConstructor[] = [Delay, Reverb, Distortion]): MixerContext => {
+    const mx = useRef<Mixer>();
 
     const [state, dispatch] = useReducer(reducer, {
         tracks: [],
-        effects: [],
-        playback: {},
+        sends: [],
+        playback: {
+            status: PlaybackStatus.NOT_SET,
+            currentPosition: 0,
+        },
     });
 
     const dispatchWithLog = getDispatchWithLog(dispatch);
 
     useEffect(() => {
-        const onLoad = async trackStates => {
-            const {tracks, effects, playback} = createState(mx.current);
+        const onLoad = (): void => {
+            if (!mx.current) {
+                throw Error('Mixer instance is not available by ref after initialization');
+            }
 
-            await dispatchWithLog({ type: 'SET_TRACKS', payload: tracks });
-            await dispatchWithLog({ type: 'SET_EFFECTS', payload: effects });
-            await dispatchWithLog({ type: 'SET_PLAYBACK', payload: playback });
-            await dispatchWithLog({ type: 'PLAYBACK_READY' });
+            const {tracks, sends, playback} = createState(mx.current);
+
+            dispatchWithLog({ type: 'SET_TRACKS', payload: tracks });
+            dispatchWithLog({ type: 'SET_SENDS', payload: sends });
+            dispatchWithLog({ type: 'SET_PLAYBACK', payload: playback });
+            dispatchWithLog({ type: 'PLAYBACK_READY' });
         }
 
         if (!mx.current) {
             mx.current = new Mixer([], effects);
         }
 
-        // @ts-ignore
-        mx.current.stop()
+        void mx.current.stop()
             .then(mx => mx.load(tracks))
             .then(onLoad);
     }, [tracks]);
 
     return {
+        // @ts-ignore: should be properly instantiated
         mx,
         state,
         dispatch: dispatchWithLog,
     };
 }
-
-
-export default useMixer;

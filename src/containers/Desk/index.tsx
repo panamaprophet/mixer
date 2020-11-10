@@ -1,33 +1,25 @@
 import React, {useContext} from 'react';
+import {Desk} from '/components/Desk/index';
+import {SendContainer} from '/containers/Send/index';
+import {Context} from '/containers/Context/index';
+import {TrackContainer} from '/containers/Track/index';
+import {play, pause, rewind} from '/store/actions/index';
+import type {SendEntity, TrackEntity} from '/helpers/entities';
+import type {Playback} from '/helpers/playback';
 
-import Desk from '/components/Desk';
-import Effect from '/containers/Effect';
-import Context from '/containers/Context';
-import Track from '/containers/Track';
-
-import {
-    play,
-    pause,
-    rewind,
-} from '/store/actions';
 
 type Props = {
-    tracks: any,
-    effects: any,
-    playback: any,
+    tracks: TrackEntity[],
+    sends: SendEntity[],
+    playback: Playback,
 }
 
 
-const DeskContainer = (props) => {
+export const DeskContainer: React.FC<Props> = props => {
     const context = useContext(Context);
-    const {
-        tracks = [],
-        effects = [],
-        playback,
-    } = props;
-
-    const Tracks = tracks.map(track => (<Track {...track} key={track.id} />));
-    const Effects = effects.map(effect => (<Effect {...effect} key={effect.id} />));
+    const {tracks, sends, playback} = props;
+    const Tracks = tracks.map(track => (<TrackContainer {...track} key={track.id} />));
+    const Sends = sends.map(effect => (<SendContainer {...effect} key={effect.id} />));
 
     return (
         <Desk
@@ -36,11 +28,9 @@ const DeskContainer = (props) => {
             onRewind={() => rewind(context)}
 
             tracks={Tracks}
-            effects={Effects}
+            sends={Sends}
             playback={playback}
         >
         </Desk>
     );
 }
-
-export default DeskContainer;

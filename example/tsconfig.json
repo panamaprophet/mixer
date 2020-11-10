@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ES6",
     "outDir": "dist",
     "module": "esnext",
     "lib": [
@@ -9,11 +8,6 @@
     ],
     "moduleResolution": "node",
     "jsx": "react",
-    "baseUrl": "./src",
-    "rootDir": "./src",
-    "paths": {
-      "/*": ["*"]
-    },
     "sourceMap": true,
     "declaration": true,
     "esModuleInterop": true,
@@ -25,20 +19,21 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true,
+    "target": "es5",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "example"
+    "build"
   ]
 }

@@ -1,30 +1,35 @@
 import React, {useRef, useEffect} from 'react';
-
 import {getAverage, createMeterGradient} from './helpers';
-
 import style from './style.css';
 
 
-const Meter = ({
+type Props = {
+    analyser: AnalyserNode,
+    width?: number,
+    height?: number,
+}
+
+
+export const Meter: React.FC<Props> = ({
     analyser,
     width = 210,
     height = 20,
 }) => {
-    if (!analyser) {
-        return null;
-    }
-
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        const currentCanvasRef: any = canvasRef.current;
-        const context = currentCanvasRef.getContext('2d');
-        const array = new Uint8Array(analyser.frequencyBinCount);
+        const context = canvasRef.current?.getContext('2d');
 
         const drawMeter = () => {
+            if (!context) {
+                return;
+            }
+
+            const array = new Uint8Array(analyser.frequencyBinCount);
+
             analyser.getByteFrequencyData(array);
 
-            const average = getAverage(array);
+            const average = getAverage(array) as number;
 
             context.clearRect(0, 0, width, height);
             context.fillStyle = createMeterGradient(context, {width, height});
@@ -42,5 +47,3 @@ const Meter = ({
         </div>
     );
 }
-
-export default Meter;

@@ -1,6 +1,5 @@
 import React from 'react';
 import classnames from 'classnames';
-
 import style from './style.css';
 
 
@@ -11,6 +10,8 @@ type Props = {
 };
 
 
-const Icon = ({type}: Props) => (<div className={classnames(style.icon, style[`icon_type_${type}`])}></div>);
+export const Icon: React.FC<Props> = ({type}: Props) => {
+    const classes = classnames(style.icon, style[`icon_type_${type}`]);
 
-export default Icon;
+    return (<div className={classes}></div>);
+}

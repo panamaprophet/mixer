@@ -1,22 +1,17 @@
-'use strict';
-
-
-import {min, max} from 'ramda';
-
 /**
  * @returns {number} vertical coordinate from touch or mouse event
  */
-export const getY = event => event.touches ? event.touches[0].pageY : event.pageY;
+export const getY = (event: MouseEvent | TouchEvent): number => 'touches' in event ? event.touches[0].pageY : event.pageY;
 
 /**
  * @returns {number} horizontal coordinate from touch or move event
  */
-export const getX = event => event.touches ? event.touches[0].pageX : event.pageX;
+export const getX = (event: MouseEvent | TouchEvent): number => 'touches' in event ? event.touches[0].pageX : event.pageX;
 
 /**
  * @returns {number} relative position in percents
  */
-export const getPointerVerticalPosition = (position, {top, bottom, height}) => {
+export const getPointerVerticalPosition = (position: number, {top, bottom, height}: DOMRect): number => {
     let value = position;
 
     if (value < top) value = top;
@@ -30,7 +25,7 @@ export const getPointerVerticalPosition = (position, {top, bottom, height}) => {
 /**
  * @returns {number} relative position in percents
  */
-export const getPointerHorizontalPosition = (position, {width, left}) => {
+export const getPointerHorizontalPosition = (position: number, {width, left}: DOMRect): number => {
     let value = position; // max(min(position, left + width), left) - left;
 
     const rightBorder = left + width;

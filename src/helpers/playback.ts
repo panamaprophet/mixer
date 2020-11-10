@@ -1,34 +1,37 @@
-import {map, not} from 'ramda';
-
-import {
-    PLAYBACK_STATUS,
-} from '/constants';
+import {forEach} from 'ramda';
+import {Track} from '../models/track';
 
 
-type Track = {
-    play: () => void,
-    pause: () => void,
-    stop: () => void,
-};
+export enum PlaybackStatus {
+    PLAYING = 'PLAYING',
+    PAUSED = 'PAUSED',
+    READY = 'READY',
+    FAILED = 'FAILED',
+    NOT_SET = 'NOT_SET',
+}
+
+export interface Playback {
+    status: PlaybackStatus;
+    currentPosition: number;
+    analyser?: AnalyserNode;
+}
 
 
-export const isPlaying = playback => playback.status === PLAYBACK_STATUS.PLAYING;
+export const isPlaying = (playback: Playback): boolean => playback.status === PlaybackStatus.PLAYING;
 
-export const isPaused = playback => playback.status === PLAYBACK_STATUS.PAUSED; //@TODO: && playback.currentPosition !== 0;
+export const isPaused = (playback: Playback): boolean => playback.status === PlaybackStatus.PAUSED; // @TODO: && playback.currentPosition !== 0;
 
-export const isReady = playback => playback.status === PLAYBACK_STATUS.READY;
+export const isReady = (playback: Playback): boolean => playback.status === PlaybackStatus.READY;
 
-export const isActive = playback => (isPlaying(playback) || isPaused(playback) || isReady(playback));
+export const isActive = (playback: Playback): boolean => (isPlaying(playback) || isPaused(playback) || isReady(playback));
 
-export const isNotActive = playback => not(isActive(playback));
+export const playAll = forEach((track: Track): void => track.play());
 
-export const playAll = map((track: Track) => track.play());
+export const pauseAll = forEach((track: Track): void => track.pause());
 
-export const pauseAll = map((track: Track) => track.pause());
-
-export const rewindAll = map((track: Track) => {
+export const rewindAll = forEach((track: Track): void => {
     track.stop();
     track.play();
 });
 
-export const stopAll = map((track: Track) => track.stop());
+export const stopAll = forEach((track: Track): void => track.stop());

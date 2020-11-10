@@ -1,56 +1,46 @@
-'use strict';
-
-
 import React, {useRef} from 'react';
 import classnames from 'classnames';
-
-import FaderThumb from './FaderThumb';
-
-import {
-    getX,
-    getY,
-    getPointerVerticalPosition,
-    getPointerHorizontalPosition,
-} from './helpers';
+import {FaderThumb} from './FaderThumb';
+import {getX, getY, getPointerVerticalPosition, getPointerHorizontalPosition} from './helpers';
 
 import style from './style.css';
 
 
-const EVENTS_MAP = {
+type FaderEvent = 'mousemove' | 'mouseup' | 'mousedown' | 'touchmove' | 'touchend' | 'touchstart';
+
+const EVENTS_MAP: Record<string, FaderEvent> = {
     'mousemove': 'touchmove',
     'mouseup': 'touchend',
     'mousedown': 'touchstart',
 };
 
-const hasTouchEventsSupport = () => 'ontouchstart' in window;
+const hasTouchEventsSupport = (): boolean => 'ontouchstart' in window;
 
-const getEventNameByFeature = eventName => hasTouchEventsSupport() ? EVENTS_MAP[eventName] : eventName;
+const getEventNameByFeature = (eventName: FaderEvent): FaderEvent => (hasTouchEventsSupport() ? EVENTS_MAP[eventName] : eventName);
 
 
 type Props = {
     value: number,
-    isVertical: boolean,
-    onChange: (value) => void,
+    isVertical?: boolean,
+    onChange: (value: number) => void,
 };
 
 
-const Fader = ({
+export const Fader: React.FC<Props> = ({
     value = 0,
     isVertical = false,
-    onChange = (value) => {},
+    onChange,
 }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const onMoveStart = event => {
+    const onMoveStart = (event: MouseEvent | TouchEvent): void => {
         event.preventDefault();
 
         document.documentElement.addEventListener(getEventNameByFeature('mousemove'), onMove);
         document.documentElement.addEventListener(getEventNameByFeature('mouseup'), onMoveEnd);
-
-        return false;
     }
 
-    const onMove = event => {
+    const onMove = (event: MouseEvent | TouchEvent): void => {
         event.preventDefault();
 
         const containerElement = containerRef.current;
@@ -66,19 +56,15 @@ const Fader = ({
 
             onChange(newValue);
         }
-
-        return false;
     }
 
-    const onMoveEnd = event => {
+    const onMoveEnd = (event: MouseEvent | TouchEvent): void => {
         event.preventDefault();
 
         document.documentElement.removeEventListener(getEventNameByFeature('mousemove'), onMove);
         document.documentElement.removeEventListener(getEventNameByFeature('mouseup'), onMoveEnd);
-
-        return false;
     }
-    
+
     const thumbEventName = hasTouchEventsSupport() ? 'onTouchStart' : 'onMouseDown';
 
     return (
@@ -89,5 +75,3 @@ const Fader = ({
         </div>
     );
 };
-
-export default Fader;

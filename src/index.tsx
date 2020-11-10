@@ -1,36 +1,22 @@
 import React from 'react';
+import {useMixer} from '/hooks/useMixer/index';
+import {DeskContainer} from '/containers/Desk/index';
+import {Context} from '/containers/Context/index';
+import type {TrackSource} from './models/track'
 
-import useMixer from '/hooks/useMixer';
-import Desk from '/containers/Desk';
-import Context from '/containers/Context';
+
+type Props = {
+    tracks: TrackSource[],
+};
 
 
-const Mixdesk = ({tracks = []}) => {
+export const Mixdesk: React.FC<Props> = ({tracks = []}) => {
     const context = useMixer(tracks);
-    const {mx, state, dispatch} = context;
+    const {state} = context;
 
     return (
-        <Context.Provider value={{mx, dispatch}}>
-            <Desk {...state} />
+        <Context.Provider value={context}>
+            <DeskContainer {...state} />
         </Context.Provider>
     );
 };
-
-
-export {
-    Mixdesk,
-    useMixer,
-};
-
-
-/** example: 
-
-import {Mixdesk} from 'mixdesk';
-import {tracks} from '/config';
-
-render(
-    <Mixdesk tracks={tracks} />,
-    document.getElementById('root')
-);
-
-*/

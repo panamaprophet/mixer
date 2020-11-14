@@ -1,27 +1,23 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import {all, head, filter} from 'ramda';
-
-import Mixer from '/models/mixer';
-import Delay from '/models/fx/delay';
-
+import {Mixer} from '/models/mixer';
+import {Distortion} from '/models/sends/distortion';
 import {getNodeParamNormalizedValue} from '/helpers/node';
+import {trackMocks} from './mocks/config';
+import {Track, TrackId} from '/models/track';
 
 import './mocks/';
-import {trackMocks} from './mocks/config';
 
 
-const getTrackById = (trackId, tracks) => head(filter(track => track.id === trackId, tracks));
+const getTrackById = (trackId: TrackId, tracks: Track[]) => head(filter(track => track.id === trackId, tracks));
 
 describe('Mixer', () => {
-    const mx = new Mixer(trackMocks, [Delay]);
+    const mx = new Mixer(trackMocks, [Distortion]);
 
     describe('play()', () => {
         it('starts tracks to play', async () => {
             await mx.play();
 
-            const result = all(({playing}) => playing, mx.tracks);
+            const result = all(({isPlaying}) => isPlaying, mx.tracks);
 
             expect(result).toBe(true);
         });
@@ -32,7 +28,7 @@ describe('Mixer', () => {
             await mx.play();
             await mx.pause();
 
-            const result = all(({playing}) => playing === false, mx.tracks);
+            const result = all(({isPlaying}) => isPlaying === false, mx.tracks);
 
             expect(result).toBe(true);
         });
@@ -46,7 +42,7 @@ describe('Mixer', () => {
             await mx.setTrackVolume(trackId, volume);
 
             const track = getTrackById(trackId, mx.tracks);
-            const result = track.volume;
+            const result = track?.volume;
 
             expect(result).toBe(volume);
         });
@@ -60,7 +56,7 @@ describe('Mixer', () => {
             await mx.setTrackPanLevel(trackId, pan);
 
             const track = getTrackById(trackId, mx.tracks);
-            const result = track.pan;
+            const result = track?.pan;
 
             expect(result).toBe(pan);
         });
@@ -69,13 +65,13 @@ describe('Mixer', () => {
     describe('setTrackSendLevel()', () => {
         it('changes specified track send level', async () => {
             const trackId = 'drums';
-            const sendId = 'delay';
+            const sendId = 'distortion';
             const sendLevel = 42.0;
 
             await mx.setTrackSendLevel(trackId, sendId, sendLevel);
 
             const track = getTrackById(trackId, mx.tracks);
-            const result = getNodeParamNormalizedValue(track.fx[sendId].gain);
+            const result = getNodeParamNormalizedValue(track?.sends[sendId].gain as AudioParam);
 
             expect(result).toBe(sendLevel);
         });
@@ -88,7 +84,7 @@ describe('Mixer', () => {
             await mx.toggleTrack(trackId);
 
             const track = getTrackById(trackId, mx.tracks);
-            const result = track.muted;
+            const result = track?.isMuted;
 
             expect(result).toBe(true);
         });
@@ -101,7 +97,7 @@ describe('Mixer', () => {
             await mx.toggleTrackFx(trackId);
 
             const track = getTrackById(trackId, mx.tracks);
-            const result = track.bypassFX;
+            const result = track?.isSendsEnabled === false;
 
             expect(result).toBe(true);
         });
@@ -109,16 +105,17 @@ describe('Mixer', () => {
 
     describe('setSendParamValue()', () => {
         it('sets specified parameter value for specified send', async () => {
-            const sendId = 'delay';
-            const parameterId = 'frequency';
-            const value = 42.0;
+            const sendId = 'distortion';
+            const parameterId = 'strength';
+            const value = 100;
+            const expectedValue = 10;
 
             await mx.setSendParamValue(sendId, parameterId, value);
 
-            const send = head(filter(fx => fx.id === sendId, mx.fx));
-            const result = send[parameterId];
+            const send = head(filter(send => send.id === sendId, mx.sends));
+            const result = send ? send[parameterId] : null;
 
-            expect(result).toBe(value);
+            expect(result).toBe(expectedValue);
         });
     });
 });

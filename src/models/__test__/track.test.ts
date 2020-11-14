@@ -1,10 +1,6 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import {has} from 'ramda';
-
-import Track from '/models/track';
-
+import {Track} from '../../models/track';
+import {Delay} from '../sends';
 import './mocks';
 
 
@@ -17,6 +13,7 @@ describe('Track', () => {
         title: 'track',
         context,
         masterBus,
+        sends: [],
     });
 
     describe('volume', () => {
@@ -43,7 +40,7 @@ describe('Track', () => {
         it('starts to play track', () => {
             track.play();
 
-            expect(track.playing).toBe(true);
+            expect(track.isPlaying).toBe(true);
         });
     });
 
@@ -52,7 +49,7 @@ describe('Track', () => {
             track.play();
             track.pause();
 
-            expect(track.playing).toBe(false);
+            expect(track.isPlaying).toBe(false);
         });
     });
 
@@ -60,7 +57,7 @@ describe('Track', () => {
         it('mutes track', () => {
             track.mute();
 
-            expect(track.muted).toBe(true);
+            expect(track.isMuted).toBe(true);
         });
     });
 
@@ -69,46 +66,41 @@ describe('Track', () => {
             track.mute();
             track.unmute();
 
-            expect(track.muted).toBe(false);
+            expect(track.isMuted).toBe(false);
         });
     });
 
     describe('toggleMute()', () => {
         it('switches track mute state', () => {
-            const initialValue = track.muted;
+            const initialValue = track.isMuted;
 
             track.toggleMute();
             track.toggleMute();
 
-            expect(track.muted).toBe(initialValue);
+            expect(track.isMuted).toBe(initialValue);
         });
     });
 
-    describe('addFx()', () => {
-        it('add fx to track chain', () => {
-            const mockId = 'mockedEffect';
-            const fxMock = {
-                id: mockId,
-                signalIn: context.createGain(),
-                signalOut: context.createGain(),
-            };
+    describe('addSend()', () => {
+        it('add send to track chain', () => {
+            const delay = new Delay(context, masterBus);
 
-            track.addFx([fxMock]);
+            track.addSend(delay);
 
-            const hasEffectInChain = has(mockId, track.fx);
+            const hasSendInChain = has(delay.id, track.sends);
 
-            expect(hasEffectInChain).toBe(true);
+            expect(hasSendInChain).toBe(true);
         });
     });
 
     describe('toggleFX', () => {
         it('switches track sends state', () => {
-            const initialValue = track.bypassFX;
+            const initialValue = track.isSendsEnabled;
 
-            track.toggleFX();
-            track.toggleFX();
+            track.toggleSends();
+            track.toggleSends();
 
-            expect(track.bypassFX).toBe(initialValue);
+            expect(track.isSendsEnabled).toBe(initialValue);
         });
     });
 });

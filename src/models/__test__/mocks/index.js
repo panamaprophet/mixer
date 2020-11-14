@@ -5,8 +5,8 @@ global.AudioContext = AudioContextMock;
 
 global.AudioParam = AudioParamMock;
 
-global.fetch = async args => ({
-    arrayBuffer() {
+global.fetch = () => Promise.resolve({
+    arrayBuffer: () => {
         return {
             bufferLength: 1,
         };

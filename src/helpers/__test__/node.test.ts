@@ -1,4 +1,4 @@
-import * as Node from '/helpers/node';
+import {getNodeParamNormalizedValue, setNodeParamNormalizedValue} from '../node';
 
 
 describe('node helpers', () => {
@@ -10,8 +10,8 @@ describe('node helpers', () => {
                 value: 420,
             };
 
-            const expectedResult = 2.1; // percent presentation of 420 of 20000
-            const result = Node.getNodeParamNormalizedValue(nodeMock);
+            const expectedResult = nodeMock.value / (nodeMock.maxValue / 100); // = 2.1; percent presentation of 420 of 20000
+            const result = getNodeParamNormalizedValue(nodeMock as AudioParam);
 
             expect(result).toBe(expectedResult);
         });
@@ -27,7 +27,7 @@ describe('node helpers', () => {
 
             const value = 2.1;
             const expectedResult = 420;
-            const result = Node.setNodeParamNormalizedValue(nodeMock, value);
+            const result = setNodeParamNormalizedValue(nodeMock as AudioParam, value);
 
             expect(result.value).toBe(expectedResult);
         });

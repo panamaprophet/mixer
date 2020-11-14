@@ -11,8 +11,8 @@ type Props = {
     onPlay: () => void,
     onPause: () => void,
     onRewind: () => void,
-    tracks: React.ReactNode[],
-    sends: React.ReactNode[],
+    tracks?: React.ReactNode[],
+    sends?: React.ReactNode[],
 }
 
 

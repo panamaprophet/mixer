@@ -1,19 +1,16 @@
 import {filter, head} from 'ramda';
-
-import {
-    TRACK_STATE,
-} from '/constants';
-
-import {trackReducer} from '/store/reducers/tracks';
+import {TrackState} from '/models/track';
+import {trackReducer} from '../../reducers/tracks';
+import {TrackEntity} from '/helpers/entities';
 
 
-const INITIAL_STATE = [{
+const INITIAL_STATE: TrackEntity[] = [{
     id: 'drums',
     title: 'drums',
     volume: 100,
     isMuted: false,
-    isEffectsDisabled: false,
-    state: TRACK_STATE.READY,
+    isSendsEnabled: true,
+    state: TrackState.READY,
     send: {
         delay: 0,
         reverb: 0,
@@ -24,8 +21,8 @@ const INITIAL_STATE = [{
     title: 'bass',
     volume: 100,
     isMuted: false,
-    isEffectsDisabled: false,
-    state: TRACK_STATE.READY,
+    isSendsEnabled: true,
+    state: TrackState.READY,
     send: {
         delay: 0,
         reverb: 0,
@@ -57,24 +54,24 @@ describe('Playback reducer', () => {
         });
         const resultTrack = head(filter(track => track.id === trackId, resultState));
 
-        expect(resultTrack.volume).toBe(value);
+        expect(resultTrack?.volume).toBe(value);
     });
 
     it('Track send level changed', () => {
         const trackId = 'drums';
-        const fxId = 'delay';
+        const sendId = 'delay';
         const value = 42.0;
         const resultState = trackReducer(state, {
             type: 'SET_TRACK_SEND_LEVEL',
             payload: {
                 trackId,
-                fxId,
+                sendId,
                 value,
             },
         });
         const resultTrack = head(filter(track => track.id === trackId, resultState));
 
-        expect(resultTrack.send[fxId]).toBe(value);
+        expect(resultTrack?.send[sendId]).toBe(value);
     });
 
     it('Track mute toggled', () => {
@@ -87,20 +84,20 @@ describe('Playback reducer', () => {
         });
         const resultTrack = head(filter(track => track.id === trackId, resultState));
 
-        expect(resultTrack.isMuted).toBe(true);
+        expect(resultTrack?.isMuted).toBe(true);
     });
 
     it('Track fx bypass toggled', () => {
         const trackId = 'drums';
         const resultState = trackReducer(state, {
-            type: 'TRACK_FX_TOGGLE',
+            type: 'TRACK_SEND_TOGGLE',
             payload: {
                 trackId,
             },
         });
         const resultTrack = head(filter(track => track.id === trackId, resultState));
 
-        expect(resultTrack.isEffectsDisabled).toBe(true);
+        expect(resultTrack?.isSendsEnabled).toBe(false);
     });
 
     it('Track set ready state', () => {
@@ -109,11 +106,11 @@ describe('Playback reducer', () => {
             type: 'TRACK_SET_READY_STATE',
             payload: {
                 trackId,
-                state: TRACK_STATE.FAILED,
+                value: TrackState.FAILED,
             },
         });
         const resultTrack = head(filter(track => track.id === trackId, resultState));
 
-        expect(resultTrack.state).toBe(TRACK_STATE.FAILED);
+        expect(resultTrack?.state).toBe(TrackState.FAILED);
     });
 });

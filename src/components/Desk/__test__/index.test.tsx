@@ -1,17 +1,20 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import {Desk} from '../';
+import {PlaybackStatus} from '/helpers/playback';
 
-import Desk from '../';
-
-import {
-    PLAYBACK_STATUS,
-} from '/constants';
 
 const playbackMock = {
-    analyser: {},
-    status: PLAYBACK_STATUS.PAUSED,
+    status: PlaybackStatus.PAUSED,
     currentPosition: 0,
 };
+
+const props = {
+    onPlay: jest.fn(),
+    onPause: jest.fn(),
+    onRewind: jest.fn(),
+    playback: playbackMock,
+}
 
 const PLAY_BUTTON = 0;
 const PAUSE_BUTTON = 1;
@@ -20,24 +23,22 @@ const REWIND_BUTTON = 2;
 
 describe('<Desk />', () => {
     it('should renders without any errors', () => {
-        const wrapper = shallow(
-            <Desk playback={{
-                ...playbackMock,
-            }} />
-        );
+        const wrapper = shallow(<Desk {...props} />);
 
         expect(wrapper).toMatchSnapshot();
     });
 
     describe('playback buttons', () => {
         it('should be disabled if mixdesk is not active', () => {
-            const wrapper = shallow(
-                <Desk playback={{
-                    ...playbackMock,
-                    status: PLAYBACK_STATUS.NOT_SET,
-                }} />
-            );
+            const p = {
+                ...props,
+                playback: {
+                    ...props.playback,
+                    status: PlaybackStatus.NOT_SET,
+                },
+            };
 
+            const wrapper = shallow(<Desk {...p} />);
             const result = wrapper.find('button[disabled]').length;
 
             expect(result).toBe(3);
@@ -46,22 +47,23 @@ describe('<Desk />', () => {
 
     describe('play button', () => {
         it('should call onPlay on press', () => {
-            const onPlay = jest.fn();
-            const wrapper = shallow(<Desk playback={{
-                ...playbackMock,
-            }} onPlay={onPlay} />);
+            const wrapper = shallow(<Desk {...props} />);
 
             wrapper.find('button').at(PLAY_BUTTON).simulate('click');
 
-            expect(onPlay).toBeCalled();
+            expect(props.onPlay).toBeCalled();
         });
 
         it('should have active class on playing', () => {
-            const wrapper = shallow(<Desk playback={{
-                ...playbackMock,
-                status: PLAYBACK_STATUS.PLAYING,
-            }} />);
+            const p = {
+                ...props,
+                playback: {
+                    ...props.playback,
+                    status: PlaybackStatus.PLAYING,
+                },
+            };
 
+            const wrapper = shallow(<Desk {...p} />);
             const result = wrapper.find('button').at(PLAY_BUTTON).hasClass('isButtonPressed');
 
             expect(result).toBe(true);
@@ -70,23 +72,23 @@ describe('<Desk />', () => {
 
     describe('pause button', () => {
         it('should call onPause on press', () => {
-            const onPause = jest.fn();
-            const wrapper = shallow(<Desk playback={{
-                ...playbackMock,
-            }} onPause={onPause} />);
-
+            const wrapper = shallow(<Desk {...props} />);
             wrapper.find('button').at(PAUSE_BUTTON).simulate('click');
 
-            expect(onPause).toBeCalled();
+            expect(props.onPause).toBeCalled();
         });
 
         it('should have active class on pause', () => {
-            const wrapper = shallow(<Desk playback={{
-                ...playbackMock,
-                status: PLAYBACK_STATUS.PAUSED,
-                currentPosition: 420,
-            }} />);
+            const p = {
+                ...props,
+                playback: {
+                    ...props.playback,
+                    status: PlaybackStatus.PAUSED,
+                    currentPosition: 420,
+                },
+            };
 
+            const wrapper = shallow(<Desk {...p} />);
             const result = wrapper.find('button').at(PAUSE_BUTTON).hasClass('isButtonPressed');
 
             expect(result).toBe(true);
@@ -95,14 +97,11 @@ describe('<Desk />', () => {
 
     describe('rewind button', () => {
         it('should call onRewind on press', () => {
-            const onRewind = jest.fn();
-            const wrapper = shallow(<Desk playback={{
-                ...playbackMock,
-            }} onRewind={onRewind} />);
+            const wrapper = shallow(<Desk {...props} />);
 
             wrapper.find('button').at(REWIND_BUTTON).simulate('click');
 
-            expect(onRewind).toBeCalled();
+            expect(props.onRewind).toBeCalled();
         });
     });
 });

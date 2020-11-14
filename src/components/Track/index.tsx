@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import {keys} from 'ramda';
-import {Fader} from '/components/Fader/index';
+import {Fader} from '/components/Fader';
 import style from './style.css';
 import {TrackEntity} from '/helpers/entities';
 import {TrackId} from '/models/track';
@@ -29,7 +29,7 @@ export const Track: React.FC<Props> = ({
     onSendLevelChange,
 }) => (
     <div className={style.track}>
-        <Fader onChange={onVolumeChange} value={volume} isVertical={true} />
+        <Fader id="volume" name="volume" onChange={onVolumeChange} value={volume} isVertical={true} />
 
         <div className="buttons">
             <button
@@ -48,7 +48,7 @@ export const Track: React.FC<Props> = ({
             {send && keys(send).map(sendId => (
                 <div className={style.send} key={sendId}>
                     <span className={style.sendTitle}>{sendId}</span>
-                    <Fader onChange={onSendLevelChange(sendId)} value={send[sendId]} />
+                    <Fader id={sendId} name={sendId} onChange={onSendLevelChange(sendId)} value={send[sendId]} />
                 </div>
             ))}
         </div>

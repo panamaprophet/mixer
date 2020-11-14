@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import classnames from 'classnames';
 import {FaderThumb} from './FaderThumb';
 import {getX, getY, getPointerVerticalPosition, getPointerHorizontalPosition} from './helpers';
-
+import {SendParameter, SendParameterType} from '/helpers/entities';
 import style from './style.css';
 
 
@@ -18,19 +18,21 @@ const hasTouchEventsSupport = (): boolean => 'ontouchstart' in window;
 
 const getEventNameByFeature = (eventName: FaderEvent): FaderEvent => (hasTouchEventsSupport() ? EVENTS_MAP[eventName] : eventName);
 
-
-type Props = {
-    value: number,
-    isVertical?: boolean,
+interface Props extends Partial<SendParameter> {
     onChange: (value: number) => void,
-};
-
+    isVertical?: boolean,
+}
 
 export const Fader: React.FC<Props> = ({
-    value = 0,
-    isVertical = false,
+    type = SendParameterType.FADER,
     onChange,
-}: Props) => {
+    isVertical = false,
+    value,
+}) => {
+    if (type !== SendParameterType.FADER) {
+        return null;
+    }
+
     const containerRef = useRef<HTMLDivElement>(null);
 
     const onMoveStart = (event: MouseEvent | TouchEvent): void => {
@@ -70,7 +72,7 @@ export const Fader: React.FC<Props> = ({
     return (
         <div className={classnames(style.fader, !isVertical && style.isHorisontal)} ref={containerRef}>
             <div className={style.control}>
-                <FaderThumb position={value} events={{[thumbEventName]: onMoveStart}} isVertical={isVertical} />
+                <FaderThumb position={Number(value)} events={{[thumbEventName]: onMoveStart}} isVertical={isVertical} />
             </div>
         </div>
     );

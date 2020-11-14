@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable max-classes-per-file */
+
+
 export class AudioNodeMock {
     connect() {}
     disconnect() {}

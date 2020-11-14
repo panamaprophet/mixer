@@ -41,7 +41,7 @@ export const setNodeParams = (node: AudioNode, params: Record<string, SendParamV
     Object.keys(params).forEach(key => {
         const value = params[key];
 
-        if (isAudioParam(node[key]) && is(Number, value) && key in node) {
+        if (isAudioParam(node[key]) && is(Number, value)) {
             // @ts-ignore: no iterator on AudioParam`
             setNodeParamNormalizedValue(node[key], value as number);
         } else {

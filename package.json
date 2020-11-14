@@ -26,6 +26,8 @@
     "@babel/preset-env": "^7.10.0",
     "@babel/preset-react": "^7.10.0",
     "@types/classnames": "^2.2.10",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/ramda": "^0.27.6",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -35,10 +37,11 @@
     "autoprefixer": "^10.0.1",
     "classnames": "^2.2.6",
     "core-js": "^3.7.0",
+    "cross-env": "^7.0.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
-    "eslint": "^7.13.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^30.7.7",
@@ -50,9 +53,9 @@
     "microbundle-crl": "^0.13.11",
     "npm-run-all": "^4.1.5",
     "ramda": "^0.27.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
     "regenerator-runtime": "^0.13.5",
     "ts-jest": "^26.0.0",
     "tslib": "^2.0.0",
@@ -62,18 +65,14 @@
     "react": "^16.0.0"
   },
   "jest": {
-    "testRegex": "((\\.|/*.)(test))\\.js?$",
     "transform": {
       "^.+\\.jsx?$": "babel-jest",
       "^.+\\.tsx?$": "ts-jest"
     },
     "moduleNameMapper": {
-      "^/(.+)": "<rootDir>/src/$1",
+      "^/(components|helpers|models)/(.*)": "<rootDir>/src/$1/$2",
       "\\.css$": "<rootDir>/node_modules/jest-css-modules"
     },
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
-    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],

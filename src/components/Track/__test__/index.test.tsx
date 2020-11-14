@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
-
-import Track from '../';
+import {Track} from '../';
+import {TrackState} from '/models/track';
 
 
 const propsMock = {
@@ -9,15 +9,16 @@ const propsMock = {
     title: 'Track',
     volume: 42.0,
     isMuted: false,
-    isEffectsDisabled: false,
+    isSendsEnabled: true,
     send: {
         delay: 0,
         reverb: 0,
     },
+    state: TrackState.NOT_SET,
     onMute: jest.fn(),
     onBypass: jest.fn(),
     onVolumeChange: jest.fn(),
-    onSendLevelChange: jest.fn(),
+    onSendLevelChange: jest.fn(() => jest.fn()),
 };
 
 const MUTE_BUTTON = 0;

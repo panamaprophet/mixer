@@ -13,13 +13,10 @@ exports[`<Desk /> should renders without any errors 1`] = `
     <div
       className="controls"
     >
-      <Meter
-        analyser={Object {}}
-      />
       <button
         className="control button"
         disabled={false}
-        onClick={[Function]}
+        onClick={[MockFunction]}
       >
         <Icon
           type="play"
@@ -29,7 +26,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
       <button
         className="control button isButtonPressed"
         disabled={false}
-        onClick={[Function]}
+        onClick={[MockFunction]}
       >
         <Icon
           type="pause"
@@ -39,7 +36,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
       <button
         className="control button"
         disabled={false}
-        onClick={[Function]}
+        onClick={[MockFunction]}
       >
         <Icon
           type="rewind"
@@ -48,7 +45,7 @@ exports[`<Desk /> should renders without any errors 1`] = `
       </button>
     </div>
     <div
-      className="effects"
+      className="sends"
     />
   </div>
 </div>

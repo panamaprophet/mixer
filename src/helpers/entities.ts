@@ -9,13 +9,14 @@ export type SendParameterId = string;
 export enum SendParameterType {
     RADIO = 'radio',
     FADER = 'fader',
+    UNKNOWN = 'unknown',
 }
 
 export type SendParameter = {
     id: SendParameterId,
     name: string,
     value: SendParamValue,
-    values?: (string | number)[],
+    values?: SendParamValue[],
     type: SendParameterType,
 }
 

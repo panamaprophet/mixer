@@ -1,10 +1,12 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-
-import Radio from '../';
+import {SendParameterType} from '/helpers/entities';
+import {Radio} from '../';
 
 
 const props = {
+    id: 'radio',
+    type: SendParameterType.RADIO,
     name: 'radio-test',
     value: 'one',
     values: ['one', 'two', 'three'],

@@ -1,4 +1,4 @@
-.effect {
+.send {
     overflow: hidden;
 
     width: 100%;
@@ -21,6 +21,41 @@
     background: #1b5e20;
 }
 
-.effect:not(:first-child) .title {
+.send:not(:first-child) .title {
     background: #827717;
+}
+
+/* send parameter styles */
+
+.parameter {
+    position: relative;
+
+    display: flex;
+
+    margin: 8px 8px 16px;
+}
+
+.parameterContainer {
+    flex-grow: 1;
+
+    width: 40%;
+    margin-right: 16px;
+}
+
+.parameterTitle {
+    font-weight: bold;
+
+    display: inline-block;
+    overflow: hidden;
+
+    width: 35%;
+    margin-right: 5%;
+    margin-left: 8px;
+
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: #555;
+    text-shadow: 1px 1px 0 #eee;
 }

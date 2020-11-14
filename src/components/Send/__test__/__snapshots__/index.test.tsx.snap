@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Send /> should renders without any errors 1`] = `
+<div
+  className="send"
+>
+  <div
+    className="title"
+  >
+    Effect
+  </div>
+  <div
+    className="parameterValue"
+    key="effect-parameter-1"
+  >
+    <div
+      className="parameter"
+      key="effect-parameter-1"
+    >
+      <span
+        className="parameterTitle"
+      >
+        Effect
+        :
+      </span>
+      <div
+        className="parameterContainer"
+      >
+        <Fader
+          id="effect-parameter-1"
+          name="Effect Parameter 1"
+          onChange={[MockFunction]}
+          type="fader"
+          value={42}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="parameterValue"
+    key="effect-parameter-2"
+  >
+    <div
+      className="parameter"
+      key="effect-parameter-2"
+    >
+      <span
+        className="parameterTitle"
+      >
+        Effect
+        :
+      </span>
+      <div
+        className="parameterContainer"
+      >
+        <Radio
+          id="effect-parameter-2"
+          name="Effect Parameter 2"
+          onChange={[MockFunction]}
+          type="radio"
+          value="71.0"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

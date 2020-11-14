@@ -8,5 +8,5 @@ import type {SendEntity} from '/helpers/entities';
 export const SendContainer: React.FC<SendEntity> = props => {
     const context = useContext(Context);
 
-    return (<Send {...props} onParamChange={setSendParamValue(context)(props.id)} />);
+    return (<Send {...props} onChange={setSendParamValue(context)(props.id)} />);
 };

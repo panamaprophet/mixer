@@ -9,19 +9,19 @@ export class AudioNodeMock {
 }
 
 export class AudioParamMock extends AudioNodeMock {
+    maxValue = 100;
+    minValue = 0;
+    value = 1;
+    defaultValue = 1;
     constructor() {
         super();
-
-        this.maxValue = 100;
-        this.minValue = 0;
-        this.value = 1;
-        this.defaultValue = 1;
     }
 }
 
 export class AnalyserMock extends AudioNodeMock {}
 
 export class BiquadFilterMock extends AudioNodeMock {
+    frequency: AudioParamMock;
     constructor() {
         super();
 
@@ -34,6 +34,7 @@ export class ConvolverMock extends AudioNodeMock {}
 export class WaveShaperMock extends AudioNodeMock {}
 
 export class GainMock extends AudioNodeMock {
+    gain: AudioParamMock;
     constructor() {
         super();
 
@@ -49,6 +50,7 @@ export class DelayMock extends AudioNodeMock {
 }
 
 export class StereoPannerMock extends AudioNodeMock {
+    pan: AudioParamMock;
     constructor() {
         super();
 

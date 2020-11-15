@@ -1,11 +1,11 @@
+import './mocks';
+
 import {all, head, filter} from 'ramda';
 import {Mixer} from '/models/mixer';
 import {Distortion} from '/models/sends/distortion';
 import {getNodeParamNormalizedValue} from '/helpers/node';
 import {trackMocks} from './mocks/config';
 import {Track, TrackId} from '/models/track';
-
-import './mocks/';
 
 
 const getTrackById = (trackId: TrackId, tracks: Track[]) => head(filter(track => track.id === trackId, tracks));

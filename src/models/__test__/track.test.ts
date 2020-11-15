@@ -1,7 +1,8 @@
+import './mocks';
+
 import {has} from 'ramda';
 import {Track} from '../../models/track';
 import {Delay} from '../sends';
-import './mocks';
 
 
 describe('Track', () => {
